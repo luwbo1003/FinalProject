@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { connectToDb, getDb } = require("./config/database");
+const { initializeFirebaseApp } = require("./config/database");
 
 const app = express();
 const port = process.env.PORT | 8081;
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-connectToDb();
+initializeFirebaseApp();
 
 app.listen(port, () => {
   console.log(`Server is running on http://${host}:${port}`);

@@ -1,35 +1,25 @@
-const mongoose = require("mongoose");
-const db_conn =
-  "mongodb+srv://group1:0123456789@datn.r7gptgm.mongodb.net/?retryWrites=true&w=majority";
-const db_name = "DATN";
+const admin = require("firebase-admin");
 
-let db_client;
+const initializeFirebaseApp = () => {
+  const serviceAccount = require("../finalproject-group1-firebase-adminsdk-mk97o-4c975c4f67.json");
+  const firebaseConfig = {
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL:
+      "https://finalproject-group1-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  };
 
-async function connectToDb() {
-  try {
-    db_client = await mongoose
-      .connect(db_conn, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then(() => {
-        console.log("Connected to MongoDB");
-      });
-  } catch {
-    (err) => {
-      console.error("Error connecting to MongoDB:", err);
-    };
-  }
-}
+  const firebaseApp = admin.initializeApp(firebaseConfig);
+  const db = firebaseApp.database();
 
-function getDb() {
-  if (!db_client) {
-    throw new Error("MongoDB client is not connected.");
-  }
-  return db_client.db(db_name);
-}
+  db.ref(".info/connected").on("value", (snapshot) => {
+    if (snapshot.val() === true) {
+      console.log("Firebase Realtime Database is connected");
+    } else {
+      console.log("Firebase Realtime Database is not connected");
+    }
+  });
+};
 
 module.exports = {
-  connectToDb,
-  getDb,
+  initializeFirebaseApp,
 };
