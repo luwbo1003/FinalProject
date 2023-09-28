@@ -6,15 +6,19 @@ import MedicationsScreen from "../screens/Medications/MedicationsScreen";
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
-  <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} />
-  </Stack.Navigator>;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
 };
 
 const MedicationsStackNavigator = () => {
-  <Stack.Navigator>
-    <Stack.Screen name="Medications" component={MedicationsScreen} />
-  </Stack.Navigator>;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Medications" component={MedicationsScreen} />
+    </Stack.Navigator>
+  );
 };
 
 export { HomeStackNavigator, MedicationsStackNavigator };

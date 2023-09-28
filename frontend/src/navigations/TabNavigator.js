@@ -8,10 +8,20 @@ import {
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
-  <Tab.Navigator>
-    <Tab.Screen name="Home" component={HomeStackNavigator} />
-    <Tab.Screen name="Medications" component={MedicationsStackNavigator} />
-  </Tab.Navigator>;
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={HomeStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Medications"
+        component={MedicationsStackNavigator}
+        options={{ headerShown: false }}
+      />
+    </Tab.Navigator>
+  );
 };
 
 export default BottomTabNavigator;
