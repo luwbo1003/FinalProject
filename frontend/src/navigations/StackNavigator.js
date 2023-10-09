@@ -1,67 +1,32 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/Home/HomeScreen";
-import MedicationsScreen from "../screens/Medications/MedicationsScreen";
-import MoreScreen from "../screens/More/MoreScreen";
-import { colors } from "../../style";
+// import PillScreen from "../screens/Pill/PillScreen";
+import UserScreen from "../screens/User/UserScreen";
 
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
 };
 
-const MedicationsStackNavigator = () => {
+// const PillStackNavigator = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="Pill" component={PillScreen} />
+//     </Stack.Navigator>
+//   );
+// };
+
+const UserStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Medications"
-        component={MedicationsScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
-      />
+      <Stack.Screen name="User" component={UserScreen} />
     </Stack.Navigator>
   );
 };
-
-const MoreStackNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="More"
-        component={MoreScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-export { HomeStackNavigator, MedicationsStackNavigator, MoreStackNavigator };
+export { HomeStackNavigator, UserStackNavigator };

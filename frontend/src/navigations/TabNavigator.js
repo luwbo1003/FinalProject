@@ -1,63 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { View, TouchableOpacity, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from "react-native-vector-icons/Ionicons";
-import {
-  HomeStackNavigator,
-  MedicationsStackNavigator,
-  MoreStackNavigator,
-} from "./StackNavigator";
-import { colors } from "../../style";
+import { HomeStackNavigator, UserStackNavigator } from "./StackNavigator";
+import AddPill from "../components/AddPill"; // Import component Modal
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarStyle: {
-          backgroundColor: colors.primary02,
-        },
-        tabBarIcon: ({ size, focused }) => {
-          let iconName;
-          if (route.name === "HomeTab") {
-            iconName = "home";
-          } else if (route.name === "MedicationsTab") {
-            iconName = "medkit";
-          } else if (route.name === "MoreTab") {
-            iconName = "ellipsis-horizontal";
-          }
-          const iconColor = focused ? colors.primary04 : colors.primary01;
-          return <Icon name={iconName} size={size} color={iconColor} />;
-        },
-        tabBarActiveTintColor: colors.primary04,
-        tabBarInactiveTintColor: colors.primary01,
-      })}
-    >
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeStackNavigator}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Home",
+    <View style={{ flex: 1 }}>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeStackNavigator} options={{ headerShown: false }} />
+        <Tab.Screen name="User" component={UserStackNavigator} options={{ headerShown: false }} />
+      </Tab.Navigator>
+
+      {/* Nút giữa */}
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "blue", // Màu nền của nút
+          height: 50, // Điều chỉnh chiều cao của nút
         }}
-      />
-      <Tab.Screen
-        name="MedicationsTab"
-        component={MedicationsStackNavigator}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Medications",
-        }}
-      />
-      <Tab.Screen
-        name="MoreTab"
-        component={MoreStackNavigator}
-        options={{
-          headerShown: false,
-          tabBarLabel: "More",
-        }}
-      />
-    </Tab.Navigator>
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={{ color: "white" }}>Show Modal</Text>
+      </TouchableOpacity>
+
+      {/* Modal */}
+      <AddPill isVisible={modalVisible} onClose={() => setModalVisible(false)} />
+    </View>
   );
 };
 
