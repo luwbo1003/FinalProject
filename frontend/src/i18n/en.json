@@ -1,8 +1,12 @@
 {
     "ScreenTitle": {
-        "homeScreenTitle": "Home Screen",
+        "homeScreenTitle": "Home",
+        "userScreenTitle": "User",
         "morningTabTitle": "Morning",
         "afternoonTabTitle": "Afternoon",
         "eveningTabTitle": "Evening"
+    },
+    "ButtonLabel": {
+        "addBtn": "Add"
     }
 }

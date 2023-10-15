@@ -1,0 +1,12 @@
+{
+    "ScreenTitle": {
+        "homeScreenTitle": "Trang chủ",
+        "userScreenTitle": "Hồ sơ",
+        "morningTabTitle": "Sáng",
+        "afternoonTabTitle": "Trưa",
+        "eveningTabTitle": "Chiều"
+    },
+    "ButtonLabel": {
+        "addBtn": "Thêm"
+    }
+}

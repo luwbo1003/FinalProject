@@ -4,14 +4,16 @@ import HomeScreen from "../screens/Home/HomeScreen";
 // import PillScreen from "../screens/Pill/PillScreen";
 import UserScreen from "../screens/User/UserScreen";
 import { colors } from "../../styles";
+import { useTranslation } from "react-i18next";
 
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
+  const { t, i18n } = useTranslation();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name={t("ScreenTitle.homeScreenTitle")}
         component={HomeScreen}
         options={{
           headerStyle: {
@@ -35,10 +37,11 @@ const HomeStackNavigator = () => {
 // };
 
 const UserStackNavigator = () => {
+  const { t, i18n } = useTranslation();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="User"
+        name={t("ScreenTitle.userScreenTitle")}
         component={UserScreen}
         options={{
           headerStyle: {

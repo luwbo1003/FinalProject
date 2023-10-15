@@ -6,10 +6,12 @@ import NoonScreen from "./NoonScreen";
 import EveningScreen from "./EveningScreen";
 import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
+import { useTranslation } from "react-i18next";
 
 const Tab = createMaterialTopTabNavigator();
 
 const HomeScreen = () => {
+  const { t, i18n } = useTranslation();
   return (
     <View style={styles.container}>
       <Tab.Navigator
@@ -19,9 +21,18 @@ const HomeScreen = () => {
           },
         }}
       >
-        <Tab.Screen name="Sáng" component={MorningScreen} />
-        <Tab.Screen name="Trưa" component={NoonScreen} />
-        <Tab.Screen name="Chiều" component={EveningScreen} />
+        <Tab.Screen
+          name={t("ScreenTitle.morningTabTitle")}
+          component={MorningScreen}
+        />
+        <Tab.Screen
+          name={t("ScreenTitle.afternoonTabTitle")}
+          component={NoonScreen}
+        />
+        <Tab.Screen
+          name={t("ScreenTitle.eveningTabTitle")}
+          component={EveningScreen}
+        />
       </Tab.Navigator>
 
       {/* -------------------------Nút thêm --------------------------- */}

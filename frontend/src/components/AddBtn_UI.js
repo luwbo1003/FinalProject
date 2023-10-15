@@ -1,14 +1,17 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Button, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../../styles";
+import { useTranslation } from "react-i18next";
 
 const AddBtn_UI = ({ isVisible, onClose }) => {
+  const { t, i18n } = useTranslation();
   return (
     <Modal isVisible={isVisible} style={styles.modal} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
-        <Text>Thêm thuốc ở đây</Text>
-        <Button title="Nút thêm thuốc" />
+        <TouchableOpacity style={styles.btnAdd}>
+          <Text style={styles.btnLabel}>{t("ButtonLabel.addBtn")}</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
@@ -21,8 +24,20 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: colors.primary04,
-    padding: 16,
-    height: "50%",
+    padding: 24,
+    height: "75%",
+  },
+  btnAdd: {
+    backgroundColor: colors.primary01,
+    height: 48,
+    borderRadius: 8,
+    justifyContent: "center",
+  },
+  btnLabel: {
+    color: colors.primary04,
+    textTransform: "uppercase",
+    fontSize: 16,
+    textAlign: "center",
   },
 });
 

@@ -4,10 +4,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeStackNavigator, UserStackNavigator } from "./StackNavigator";
 import { colors } from "../../styles";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const { t, i18n } = useTranslation();
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -18,9 +20,9 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ size, focused }) => {
             let iconName;
 
-            if (route.name === "Home") {
+            if (route.name === t("ScreenTitle.homeScreenTitle")) {
               iconName = "home";
-            } else if (route.name === "User") {
+            } else if (route.name === t("ScreenTitle.userScreenTitle")) {
               iconName = "person";
             }
 
@@ -33,12 +35,14 @@ const BottomTabNavigator = () => {
         })}
       >
         <Tab.Screen
-          name="Home"
+          key="Home"
+          name={t("ScreenTitle.homeScreenTitle")}
           component={HomeStackNavigator}
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="User"
+          key="User"
+          name={t("ScreenTitle.userScreenTitle")}
           component={UserStackNavigator}
           options={{ headerShown: false }}
         />
