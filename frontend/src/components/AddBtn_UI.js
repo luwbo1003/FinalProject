@@ -2,13 +2,16 @@ import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 
-const AddPill = ({ isVisible, onClose }) => {
+const AddBtn_UI = ({ isVisible, onClose }) => {
   return (
-    <Modal isVisible={isVisible} style={styles.modal}>
+    <Modal
+      isVisible={isVisible}
+      style={styles.modal}
+      onBackdropPress={onClose}
+    >
       <View style={styles.modalContent}>
         <Text>Thêm thuốc ở đây</Text>
-        <Button title="Nút thêm thuốc" onPress={onClose} />
-        <Button title="Close" onPress={onClose} />
+        <Button title="Nút thêm thuốc"/>
       </View>
     </Modal>
   );
@@ -26,4 +29,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddPill;
+export default AddBtn_UI;
