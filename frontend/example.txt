@@ -1,0 +1,43 @@
+chạy BE và FE bằng 2 terminal ở 2 folder
+cài thêm tool thì cài riêng luôn, khum đừng cài ở root, nó tự tạo thêm 1 package.json là lỗi đóa
+
+
+muốn sử dụng service thì như này thui:
+
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { getAllUsers, getUserById, getUserByEmail } from './UserService';
+
+function MyComponent() {
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch all users
+    getAllUsers()
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+
+    // Fetch a user by ID
+    getUserById('123')
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user by ID:', error);
+      });
+  }, []);
+
+  return (
+    <View>
+      <Text>All Users: {JSON.stringify(users)}</Text>
+      <Text>User by ID: {JSON.stringify(user)}</Text>
+    </View>
+  );
+}
+
+export default MyComponent;
