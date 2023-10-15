@@ -5,14 +5,20 @@ import MorningScreen from "./MorningScreen";
 import NoonScreen from "./NoonScreen";
 import EveningScreen from "./EveningScreen";
 import AddBtn from "../../components/AddBtn";
-
+import { colors } from "../../../styles";
 
 const Tab = createMaterialTopTabNavigator();
 
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarIndicatorStyle: {
+            backgroundColor: colors.primary01,
+          },
+        }}
+      >
         <Tab.Screen name="Sáng" component={MorningScreen} />
         <Tab.Screen name="Trưa" component={NoonScreen} />
         <Tab.Screen name="Chiều" component={EveningScreen} />
@@ -39,9 +45,9 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
-  }
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
 });
 
 export default HomeScreen;

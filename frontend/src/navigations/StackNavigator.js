@@ -3,13 +3,25 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/Home/HomeScreen";
 // import PillScreen from "../screens/Pill/PillScreen";
 import UserScreen from "../screens/User/UserScreen";
+import { colors } from "../../styles";
 
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.primary02,
+          },
+          headerTitleStyle: {
+            color: colors.primary04,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -25,7 +37,18 @@ const HomeStackNavigator = () => {
 const UserStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="User" component={UserScreen} />
+      <Stack.Screen
+        name="User"
+        component={UserScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.primary02,
+          },
+          headerTitleStyle: {
+            color: colors.primary04,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };
