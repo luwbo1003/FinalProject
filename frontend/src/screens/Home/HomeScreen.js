@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import MorningScreen from "./MorningScreen";
 import NoonScreen from "./NoonScreen";
 import EveningScreen from "./EveningScreen";
+import PickerDate from "./PickerDate";
 import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
@@ -33,14 +34,18 @@ const HomeScreen = () => {
           name={t("ScreenTitle.eveningTabTitle")}
           component={EveningScreen}
         />
+          <Tab.Screen
+              name={t("ScreenTitle.pickerDate")}
+              component={PickerDate}
+          />
       </Tab.Navigator>
 
       {/* -------------------------Nút thêm --------------------------- */}
-      <View style={styles.btnStyle}>
-        <View style={styles.addBtn}>
-          <AddBtn />
-        </View>
-      </View>
+      {/*<View style={styles.btnStyle}>*/}
+      {/*  <View style={styles.addBtn}>*/}
+      {/*    <AddBtn />*/}
+      {/*  </View>*/}
+      {/*</View>*/}
       {/* --------------------------Nút thêm -------------------------- */}
     </View>
   );

@@ -4,7 +4,8 @@
         "userScreenTitle": "User",
         "morningTabTitle": "Morning",
         "afternoonTabTitle": "Afternoon",
-        "eveningTabTitle": "Evening"
+        "eveningTabTitle": "Evening",
+        "pickerDate": "Picker Date"
     },
     "ButtonLabel": {
         "addBtn": "Add"
