@@ -12,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-initializeFirebaseApp();
-apiRoute(app);
+const firebaseApp = initializeFirebaseApp();
+apiRoute(app, firebaseApp);
 
 app.listen(port, () => {
   console.log(`Server is running on http://${host}:${port}`);
