@@ -4,7 +4,8 @@
         "userScreenTitle": "Hồ sơ",
         "morningTabTitle": "Sáng",
         "afternoonTabTitle": "Trưa",
-        "eveningTabTitle": "Chiều"
+        "eveningTabTitle": "Chiều",
+        "pickerDate": "Đặt lịch"
     },
     "ButtonLabel": {
         "addBtn": "Thêm"
