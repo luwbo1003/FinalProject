@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 
 const initializeFirebaseApp = () => {
-  const serviceAccount = require("../finalproject-group1-firebase-adminsdk-mk97o-4c975c4f67.json");
+  const serviceAccount = require("../../finalproject-group1-firebase-adminsdk-mk97o-4c975c4f67.json");
   const firebaseConfig = {
     credential: admin.credential.cert(serviceAccount),
     databaseURL:
