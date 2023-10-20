@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { initializeFirebaseApp } = require("./config/database");
-const apiRoute = require("./route/apiRoute");
+const { initializeFirebaseApp } = require("./src/config/database");
+const apiRoute = require("./src/route/apiRoute");
 
 const app = express();
 const port = process.env.PORT | 8083;
