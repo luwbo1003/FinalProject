@@ -13,7 +13,10 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
+
         name={t("ScreenTitle.homeScreenTitle")}
+        name={t("Home")}
+
         component={HomeScreen}
         options={{
           headerStyle: {

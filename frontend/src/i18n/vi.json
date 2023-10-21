@@ -2,9 +2,12 @@
     "ScreenTitle": {
         "homeScreenTitle": "Trang chủ",
         "userScreenTitle": "Hồ sơ",
+
         "morningTabTitle": "Sáng",
         "afternoonTabTitle": "Trưa",
-        "eveningTabTitle": "Chiều"
+        "eveningTabTitle": "Chiều",
+        "morningTabTitle": "Lịch uống thuốc",
+        "pickerDate": "Đặt lịch"
     },
     "ButtonLabel": {
         "addBtn": "Thêm"

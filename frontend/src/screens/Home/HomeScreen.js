@@ -25,6 +25,7 @@ const HomeScreen = () => {
           name={t("ScreenTitle.morningTabTitle")}
           component={MorningScreen}
         />
+
         <Tab.Screen
           name={t("ScreenTitle.afternoonTabTitle")}
           component={NoonScreen}
@@ -33,6 +34,11 @@ const HomeScreen = () => {
           name={t("ScreenTitle.eveningTabTitle")}
           component={EveningScreen}
         />
+
+          <Tab.Screen
+              name={t("ScreenTitle.pickerDate")}
+              component={PickerDate}
+          />
       </Tab.Navigator>
 
       {/* -------------------------Nút thêm --------------------------- */}
