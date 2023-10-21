@@ -1,9 +1,20 @@
 const { v4: uuidv4 } = require("uuid");
-const { getDatabase,ref } = require("firebase-admin/database");
-const crypto = require("crypto");
+const { getDatabase } = require("firebase-admin/database");
 
-const generateOTP = async (req, res) => {
-  const db = getDatabase();
+
+const twilio = require('twilio');
+
+const accountSid = process.env.ACCOUNT_ID;
+const authToken = process.env.AUTH_TOKEN;
+const twilioPhoneNumber = process.env.PHONE;
+console.log(authToken);
+console.log(twilioPhoneNumber);
+console.log(accountSid);
+
+
+const client = twilio(accountSid, authToken);
+
+const generateOTP = (req, res) => {
   const { phoneNumber } = req.body;
 
   // Kiểm tra số điện thoại có hợp lệ không
@@ -14,24 +25,35 @@ const generateOTP = async (req, res) => {
   // Tạo mã OTP ngẫu nhiên
   const otpCode = Math.floor(100000 + Math.random() * 900000);
 
-  // Tạo otpId từ số điện thoại
-  const otpId = crypto.createHash("md5").update(phoneNumber).digest("hex");
-
-  // Lưu mã OTP và trạng thái xác minh vào Firebase Realtime Database
-  const otpRef = await db.ref("otp").child(otpId);
+  // Lưu mã OTP vào Firebase Realtime Database
+  const otpId = uuidv4();
+  const db = getDatabase();
+  const otpRef = db.ref("otp").child(otpId);
   otpRef
-    .set({ phoneNumber, otpCode, verified: false }) // Đánh dấu ban đầu là chưa xác minh
+    .set({ phoneNumber, otpCode })
     .then(() => {
-      // Gửi mã OTP đến người dùng (thông qua SMS, email, hoặc cách khác)
-      console.log(`OTP sent to ${phoneNumber}: ${otpCode}`);
-
-      res.status(200).json({ otpId });
+      // Gửi mã OTP đến số điện thoại người dùng
+      client.messages
+        .create({
+          body: `Mã OTP để đăng nhập của bạn là: ${otpCode}`,
+          from: twilioPhoneNumber,
+          to: "+84" + phoneNumber
+        })
+        .then((message) => {
+          console.log(`OTP sent to ${phoneNumber}: ${otpCode}`);
+          res.status(200).json({ otpId });
+        })
+        .catch((error) => {
+          console.error("Error sending OTP:", error);
+          res.status(500).json({ message: "Failed to send OTP" });
+        });
     })
     .catch((error) => {
       console.error("Error creating OTP:", error);
       res.status(500).json({ message: "Failed to create OTP" });
     });
 };
+
 
 const verifyOTP = async (req, res) => {
   const db = getDatabase();

@@ -16,6 +16,7 @@
     "firebase": "^10.4.0",
     "firebase-admin": "^11.10.1",
     "nodemon": "^3.0.1",
+    "twilio": "^4.19.0",
     "uuid": "^9.0.1"
   }
 }
