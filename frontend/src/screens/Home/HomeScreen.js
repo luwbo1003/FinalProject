@@ -2,8 +2,6 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, StyleSheet } from "react-native";
 import MorningScreen from "./MorningScreen";
-import NoonScreen from "./NoonScreen";
-import EveningScreen from "./EveningScreen";
 import PickerDate from "./PickerDate";
 import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
@@ -26,16 +24,6 @@ const HomeScreen = () => {
           name={t("ScreenTitle.morningTabTitle")}
           component={MorningScreen}
         />
-
-        <Tab.Screen
-          name={t("ScreenTitle.afternoonTabTitle")}
-          component={NoonScreen}
-        />
-        <Tab.Screen
-          name={t("ScreenTitle.eveningTabTitle")}
-          component={EveningScreen}
-        />
-
           <Tab.Screen
               name={t("ScreenTitle.pickerDate")}
               component={PickerDate}
