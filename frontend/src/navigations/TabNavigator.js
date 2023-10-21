@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeStackNavigator, UserStackNavigator } from "./StackNavigator";
+import { HomeStackNavigator, LoginStackNavigator, UserStackNavigator } from "./StackNavigator";
 import { colors } from "../../styles";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -24,8 +24,9 @@ const BottomTabNavigator = () => {
               iconName = "home";
             } else if (route.name === t("ScreenTitle.userScreenTitle")) {
               iconName = "person";
+            }else if (route.name === t("ScreenTitle.loginScreenTitle")) {
+              iconName = "person";
             }
-
             const iconColor = focused ? colors.primary04 : colors.primary01;
 
             return <Ionicons name={iconName} size={size} color={iconColor} />;
@@ -44,6 +45,12 @@ const BottomTabNavigator = () => {
           key="User"
           name={t("ScreenTitle.userScreenTitle")}
           component={UserStackNavigator}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          key="Login"
+          name={t("ScreenTitle.loginScreenTitle")}
+          component={LoginStackNavigator}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
