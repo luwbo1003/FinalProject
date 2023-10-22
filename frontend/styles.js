@@ -14,6 +14,7 @@ export const colors = {
   primary02: "#5C95A3",
   primary03: "#75A8B2",
   primary04: "#FFFFFF",
+  neutro01: "#e8e8e8",
 };
 
 export const fonts = {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
-const PillScreen = () => {
+const MedicationScreen = () => {
   return <Text>PillScreen</Text>;
 };
 
-export default PillScreen;
+export default MedicationScreen;
