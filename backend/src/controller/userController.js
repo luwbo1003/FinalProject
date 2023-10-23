@@ -14,6 +14,7 @@ const getAllUsers = async (req, res, firebaseApp) => {
 };
 
 const getUserById = async (req, res, firebaseApp) => {
+  const db = getDatabase();
   const userId = req.params.userId;
   try {
     const snapshot = await db.ref(`User/${userId}`).once("value");

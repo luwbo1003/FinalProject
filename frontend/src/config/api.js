@@ -1,4 +1,4 @@
 const api = {
-  apiUrl: "http://localhost:8080",
+  apiUrl: "http://localhost:8083",
 };
 export default api;

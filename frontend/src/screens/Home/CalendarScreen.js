@@ -1,8 +1,95 @@
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View, Button } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import {SafeAreaView, StyleSheet, View, Button, Text, Platform, TextInput} from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+//Notification
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+});
+
+async function schedulePushNotification(hours, minutes) {
+    let date = new Date();
+    test.setHours(parseInt(hours, 10), parseInt(minutes, 10),0);
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            sound: "default",
+            title: 'Đã đến giờ uống thuốc',
+            body: 'Bạn cần uống những loại thuốc sau ...',
+        },
+        trigger: { date: test},
+        // trigger: { seconds: 2},
+    });
+}
+
+async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === 'android') {
+        await Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+        });
+    }
+
+    if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync({ projectId: 'your-project-id' })).data;
+        console.log(token);
+    } else {
+        alert('Must use physical device for Push Notifications');
+    }
+    return token;
+}
+
+
+
+let test;
+
+//Calendar
 const CalendarScreen = (props) => {
+
+    //Notification session
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+            console.log(response);
+        });
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
+
+    //Calendar session
     const [selectedStartDate, setSelectedStartDate] = useState(null);
     const [selectedEndDate, setSelectedEndDate] = useState(null);
 
@@ -17,13 +104,38 @@ const CalendarScreen = (props) => {
     };
 
     const sendData = () => {
-        const dateStartSelected = selectedStartDate.toString();
+        let dateStartSelected = new Date(selectedStartDate.toString());
+        test = dateStartSelected;
         const dateEndSelected = selectedEndDate.toString();
-        const dateFromTo = [dateStartSelected, dateEndSelected];
+        const dateFromTo = [dateStartSelected.toString(), dateEndSelected, hours.toString(), minutes.toString()];
         props.onData(dateFromTo);
     }
+
+    // Time picker session
+
+    const [hours, setHours] = useState(0)
+    const [minutes, setMinutes] = useState(0)
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        setHours(parseInt(date.getHours()));
+        setMinutes(parseInt(date.getMinutes()));
+        hideDatePicker();
+    };
+
+
     return (
         <SafeAreaView style={styles.container}>
+
             <View style={styles.container}>
                 <CalendarPicker
                     startFromMonday={true}
@@ -50,11 +162,32 @@ const CalendarScreen = (props) => {
                     todayBackgroundColor="#E0BBE4"
                     selectedDayColor="#66ff33"
                     selectedDayTextColor="#000000"
-                    scaleFactor={370}
+                    scaleFactor={350}
                     onDateChange={onDateChange}
                 />
             </View>
-            <Button onPress={sendData} title={"Tiếp tục"}/>
+
+            <Button onPress={sendData} title="Chọn ngày"/>
+
+            <View>
+                <Button title="Chọn giờ" onPress={showDatePicker} />
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="time"
+                    is24Hour="en_GB"
+                    date={new Date()}
+                    timePickerModeAndroid="spinner"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                />
+            </View>
+
+            <Button
+                title="Đặt lịch thông báo"
+                onPress={async () => {
+                    await schedulePushNotification(hours, minutes);
+                }}
+            />
         </SafeAreaView>
     );
 };
@@ -62,17 +195,15 @@ const CalendarScreen = (props) => {
 export default CalendarScreen;
 
 const styles = StyleSheet.create({
-    //   container: {
-    //     padding: '20px',
-    //     flex: 1,
-    //     backgroundColor: "#ffffff",
-    //     zIndex: 0,
-    //   },
-    //   textStyle: {
-    //     fontSize: 10,
-    //   },
-    //   titleStyle: {
-    //     textAlign: "center",
-    //     fontSize: 10,
-    //   },
+    container: {
+        flex: 1,
+        zIndex: 0,
+    },
+    textStyle: {
+        fontSize: 10,
+    },
+    titleStyle: {
+        textAlign: "center",
+        fontSize: 10,
+    },
 });

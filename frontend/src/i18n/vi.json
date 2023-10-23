@@ -5,7 +5,8 @@
         "morningTabTitle": "Sáng",
         "afternoonTabTitle": "Trưa",
         "eveningTabTitle": "Chiều",
-        "pickerDate": "Đặt lịch"
+        "pickerDate": "Đặt lịch",
+        "employeeTitle": "Nhân viên"
     },
     "ButtonLabel": {
         "addBtn": "Thêm"

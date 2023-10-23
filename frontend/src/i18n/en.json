@@ -5,7 +5,8 @@
         "morningTabTitle": "Morning",
         "afternoonTabTitle": "Afternoon",
         "eveningTabTitle": "Evening",
-        "pickerDate": "Picker Date"
+        "pickerDate": "Picker Date",
+        "employeeTitle": "Employee"
     },
     "ButtonLabel": {
         "addBtn": "Add"
