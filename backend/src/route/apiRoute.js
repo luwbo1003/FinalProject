@@ -1,16 +1,22 @@
 const express = require("express");
 const apiRouter = express.Router();
 
-const { getAllUsers, getUserById } = require("../controller/userController");
+const {
+  getAllUsers,
+  getUserById,
+  registerUser,
+} = require("../controller/userController");
 const { generateOTP, verifyOTP } = require("../controller/otpController");
 
 const apiRoute = (app) => {
-  //auth
+  //user
   apiRouter.get("/users", getAllUsers);
   apiRouter.get("/users/:userId", getUserById);
-  apiRouter.post("/generateOTP",generateOTP)
-  apiRouter.post("/verifyOTP",verifyOTP);
+  apiRouter.post("/register", registerUser);
 
+  //auth
+  apiRouter.post("/generateOTP", generateOTP);
+  apiRouter.post("/verifyOTP", verifyOTP);
 
   app.use("/", apiRouter);
 };
