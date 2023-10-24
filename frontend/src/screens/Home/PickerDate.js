@@ -1,17 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {Button, ScrollView, StyleSheet, Switch, Text, TextInput, View,} from "react-native";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 import CalendarScreen from "./CalendarScreen";
 import {createNotification} from "../../services/notificationService";
 
-const PickerData = () => {
-
+const PickerDate = () => {
     const [name, setNameMed] = useState('');
     const [quantity, setQuantityMed] = useState('');
     const [hours, setHours] = useState('')
     const [minutes, setMinutes] = useState('')
-    // const [dateStart, setDateStart] = useState('');
-    // const [dateEnd, setDateEnd] = useState('');
     const [isEnabled, setIsEnabled] = useState(false);
+
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const [isContentVisible, setContentVisible] = React.useState(true);
 
@@ -19,6 +19,7 @@ const PickerData = () => {
     const handleDateFromChild = (data) => {
         setDateFromChild(data);
     };
+
     function formatDateString(inputString) {
         try {
             const dateObject = new Date(inputString);
@@ -28,6 +29,7 @@ const PickerData = () => {
             return "Ngày không hợp lệ";
         }
     }
+
     let dateStart = formatDateString(dateFromChild[0])
     let dateEnd = formatDateString(dateFromChild[1])
     const handleCreateNotification = async () => {
@@ -47,7 +49,82 @@ const PickerData = () => {
         } catch (error) {
             console.error('Lỗi khi tạo thông báo:', error);
         }
-    };
+        await schedulePushNotification(hours, minutes);
+    }
+
+    // notifications session
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
+        }),
+    });
+
+    async function schedulePushNotification(hours, minutes) {
+        let date = new Date(dateFromChild[0]);
+        date.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0);
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                sound: "default",
+                title: 'Đã đến giờ uống thuốc',
+                body: 'Bạn cần uống những loại thuốc sau ...',
+            },
+            trigger: {date: date},
+        });
+    }
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+
+        if (Platform.OS === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        if (Device.isDevice) {
+            const {status: existingStatus} = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const {status} = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync({projectId: 'your-project-id'})).data;
+            console.log(token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+        return token;
+    }
+
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+            console.log(response);
+        });
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
 
     return (
         <ScrollView>
@@ -114,12 +191,11 @@ const PickerData = () => {
                     <Text> {dateFromChild ? formatDateString(dateFromChild[1]) : ''}</Text>
                 </View>
                 <Button title="Tạo thông báo" onPress={handleCreateNotification}/>
-                {console.log(formatDateString(dateFromChild[0]), formatDateString(dateFromChild[1]))}
             </View>
         </ScrollView>
     );
 };
-
+export default PickerDate;
 const style = StyleSheet.create({
     container: {
         padding: 10,
@@ -166,4 +242,3 @@ const style = StyleSheet.create({
     },
 });
 
-export default PickerData;

@@ -67,17 +67,14 @@ const createNotification = async (req, res, firebaseApp) => {
     //     res.status(500).json({ error: "An error occurred while adding notifications" });
     //     throw error;
     // }
-
     const db = getDatabase();
     const { name, quantity,  hours, minutes, dateStart, dateEnd} = req.body;
     try {
         const userRef = db.ref("MedicineCalendar").child("userId");
-        // Lấy dữ liệu hiện tại
         await userRef.once("value", async (snapshot) => {
             if (snapshot.exists()) {
                 // Lấy danh sách các child node
                 const children = snapshot.val();
-                // Tìm child node cuối cùng với key có định dạng MCId
                 let maxIndex = 1;
                 for (const key in children) {
                     if (key.startsWith("MCId")) {
@@ -87,15 +84,10 @@ const createNotification = async (req, res, firebaseApp) => {
                         }
                     }
                 }
-
-                // Tạo key mới
                 const newKey = `MCId${maxIndex + 1}`;
-
-                // Thay đổi notiRef để sử dụng key mới
                 const notiRef = userRef.child(newKey);
                 const medListRef = notiRef.child("MedicineList");
                 const medTimetRef = notiRef.child("Time");
-
                 const newMedicPick = {
                     "idMed": {
                         name: name,
@@ -114,12 +106,9 @@ const createNotification = async (req, res, firebaseApp) => {
                     Everyday: "false",
                     MCName: "Toa thuoc",
                 };
-
-                // Đặt thông tin vào Firebase Realtime Database
                 await notiRef.set(newDatePick);
                 await medListRef.set(newMedicPick);
                 await medTimetRef.set(newTimePick);
-
                 res.status(200).json({message: "Notification picker added successfully"});
             } else {
                 console.log("Nút người dùng không tồn tại.");
@@ -131,7 +120,6 @@ const createNotification = async (req, res, firebaseApp) => {
         res.status(500).json({ error: "An error occurred while adding notifications" });
         throw error;
     }
-
 };
 
 const addNotificationPicker = async (req, res, firebaseApp) => {
