@@ -164,7 +164,6 @@ const createNotification = async (req, res, firebaseApp) => {
 
 module.exports = {
     createNotification,
-    addNotificationPicker,
     getAllNotifications,
     getNotificationById
 };
