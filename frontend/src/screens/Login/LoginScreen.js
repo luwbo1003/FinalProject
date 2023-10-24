@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const generateSessionId = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const sessionIdLength = 10;
+  let sessionId = '';
 
+  for (let i = 0; i < sessionIdLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    sessionId += characters.charAt(randomIndex);
+  }
+
+  return sessionId;
+};
 const LoginScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [uid, setUid] = useState("");
-
+  const [otpFlag,setOtpFlag] = useState("");
   const sendVerification = async () => {
     try {
       const response = await fetch("http://192.168.1.22:8083/generateOTP", {
@@ -13,7 +25,7 @@ const LoginScreen = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ phoneNumber:phoneNumber }),
       });
   
       if (!response.ok) {
@@ -21,12 +33,13 @@ const LoginScreen = () => {
       }
   
       const data = await response.json();
-      const { otpId } = data;
+      console.log(data);
+      const { userId } = data;
   
       // Lưu trữ UID trong bộ nhớ cục bộ hoặc AsyncStorage
       // Để sử dụng sau khi xác nhận mã OTP
-      setUid(otpId);
-      setPhoneNumber("");
+      setUid(userId);
+      setOtpFlag(true);
     } catch (error) {
       console.error(error);
       Alert.alert("Đã xảy ra lỗi khi gửi mã OTP.");
@@ -35,24 +48,35 @@ const LoginScreen = () => {
 
   const confirmCode = async () => {
     try {
-      console.log(uid,code)
       const response = await fetch("http://192.168.1.22:8083/verifyOTP", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ otpId:uid, otpCode:code }),
+        body: JSON.stringify({ phoneNumber:phoneNumber, otpCode:code }),
       });
   
       if (!response.ok) {
         throw new Error("Đã xảy ra lỗi khi xác nhận mã OTP.");
       }
+      setPhoneNumber("");
   
-      console.log(response);
       // Xác nhận mã OTP thành công
       // Thực hiện các hành động tiếp theo sau đăng nhập thành công
       setCode("");
+      const sessionID = generateSessionId();
+      await AsyncStorage.setItem("userID",uid);
+      await AsyncStorage.setItem('sessionId', sessionID);
+
       Alert.alert("Đăng nhập thành công. Chào mừng trở lại trang chủ.");
+      // setSession
+      await fetch("http://192.168.1.22:8083/api/setSession", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId:sessionID,userId:uid}),
+      });
     } catch (error) {
       console.error(error);
       Alert.alert("Đã xảy ra lỗi khi xác nhận mã OTP.");
@@ -71,15 +95,20 @@ const LoginScreen = () => {
       <TouchableOpacity style={styles.sendVerification} onPress={sendVerification}>
         <Text style={styles.buttonText}>Gửi mã OTP</Text>
       </TouchableOpacity>
-      <TextInput
-        placeholder="Xác nhận OTP"
-        onChangeText={setCode}
-        keyboardType="number-pad"
-        style={styles.textInput}
-      />
-      <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-        <Text style={styles.buttonText}>Nhập</Text>
-      </TouchableOpacity>
+      {otpFlag && 
+        <>
+        <TextInput
+          placeholder="Xác nhận OTP"
+          onChangeText={setCode}
+          keyboardType="number-pad"
+          style={styles.textInput}
+        />
+        <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
+          <Text style={styles.buttonText}>Nhập</Text>
+        </TouchableOpacity>
+        </>
+      }
+      
     </View>
   );
 };
