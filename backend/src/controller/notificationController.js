@@ -122,45 +122,45 @@ const createNotification = async (req, res, firebaseApp) => {
     }
 };
 
-const addNotificationPicker = async (req, res, firebaseApp) => {
-    const db = getDatabase();
-    let MCId = 1, idMed, idTime;
-
-    try {
-        const notiRefTest = db.ref("MedicineCalendar").child("userId").child("MCId1");
-        const medListRefTest = notiRefTest.child("MedicineList");
-        const medTimetRefTest = notiRefTest.child("Time");
-        console.log(notiRefTest.toString())
-        const newMedicPickTest = {
-            idMed:{
-                name: "Panadol",
-                quantity: "2",
-            }
-        }
-        const newTimePickTest = {
-            idTime:{
-                hour: "2",
-                min: "23",
-            }
-        }
-        const newDatePickTest = {
-            DateStart: "27/04/2023",
-            DateEnd: "29/04/2023",
-            Everyday: "true",
-            MCName: "Don thuoc 1",
-        };
-
-        await notiRefTest.set(newDatePickTest);
-        await medListRefTest.set(newMedicPickTest);
-        await medTimetRefTest.set(newTimePickTest);
-        res.status(200).json({ message: "added successfully" });
-
-    } catch (error) {
-        console.error("Error adding Test ref:", error);
-        res.status(500).json({ error: "An error occurred while adding" });
-        throw error;
-    }
-};
+// const addNotificationPicker = async (req, res, firebaseApp) => {
+//     const db = getDatabase();
+//     let MCId = 1, idMed, idTime;
+//
+//     try {
+//         const notiRefTest = db.ref("MedicineCalendar").child("userId").child("MCId1");
+//         const medListRefTest = notiRefTest.child("MedicineList");
+//         const medTimetRefTest = notiRefTest.child("Time");
+//         console.log(notiRefTest.toString())
+//         const newMedicPickTest = {
+//             idMed:{
+//                 name: "Panadol",
+//                 quantity: "2",
+//             }
+//         }
+//         const newTimePickTest = {
+//             idTime:{
+//                 hour: "2",
+//                 min: "23",
+//             }
+//         }
+//         const newDatePickTest = {
+//             DateStart: "27/04/2023",
+//             DateEnd: "29/04/2023",
+//             Everyday: "true",
+//             MCName: "Don thuoc 1",
+//         };
+//
+//         await notiRefTest.set(newDatePickTest);
+//         await medListRefTest.set(newMedicPickTest);
+//         await medTimetRefTest.set(newTimePickTest);
+//         res.status(200).json({ message: "added successfully" });
+//
+//     } catch (error) {
+//         console.error("Error adding Test ref:", error);
+//         res.status(500).json({ error: "An error occurred while adding" });
+//         throw error;
+//     }
+// };
 
 module.exports = {
     createNotification,

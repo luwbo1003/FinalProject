@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import {Button, ScrollView, StyleSheet, Switch, Text, TextInput, View,} from "react-native";
+import {Button, Platform, ScrollView, StyleSheet, Switch, Text, TextInput, View,} from "react-native";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import CalendarScreen from "./CalendarScreen";
