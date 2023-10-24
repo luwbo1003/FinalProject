@@ -7,11 +7,10 @@ const PickerData = () => {
 
     const [name, setNameMed] = useState('');
     const [quantity, setQuantityMed] = useState('');
-    const [hour, setHours] = useState('');
-    const [minute, setMinutes] = useState('');
-    const [DateStart, setDateStart] = useState('');
-    const [DateEnd, setDateEnd] = useState('');
-
+    const [hours, setHours] = useState('')
+    const [minutes, setMinutes] = useState('')
+    // const [dateStart, setDateStart] = useState('');
+    // const [dateEnd, setDateEnd] = useState('');
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const [isContentVisible, setContentVisible] = React.useState(true);
@@ -19,16 +18,7 @@ const PickerData = () => {
     const [dateFromChild, setDateFromChild] = useState("");
     const handleDateFromChild = (data) => {
         setDateFromChild(data);
-        setHours(dateFromChild[2].toString());
-        setMinutes(dateFromChild[3].toString());
-        setDateStart(formatDateString(dateFromChild[0]));
-        setDateEnd(formatDateString(dateFromChild[1]));
     };
-    const [timerFromChild, setTimerFromChild] = useState("");
-    const handleTimeFromChild = (time) => {
-        setTimerFromChild(time);
-    };
-
     function formatDateString(inputString) {
         try {
             const dateObject = new Date(inputString);
@@ -38,22 +28,17 @@ const PickerData = () => {
             return "Ngày không hợp lệ";
         }
     }
-
-// add pills
-
-    const [inputFields, setInputFields] = useState([
-        {id: 1, text: '', number: ''},
-    ]);
-
-
+    let dateStart = formatDateString(dateFromChild[0])
+    let dateEnd = formatDateString(dateFromChild[1])
     const handleCreateNotification = async () => {
+
         const notificationData = {
             name,
             quantity,
-            hour,
-            minute,
-            DateStart,
-            DateEnd,
+            hours,
+            minutes,
+            dateStart,
+            dateEnd,
         };
         try {
             const response = await createNotification(notificationData);
@@ -64,26 +49,39 @@ const PickerData = () => {
         }
     };
 
-
-
     return (
         <ScrollView>
             <View style={style.container}>
-                {console.log(name, quantity, hour, minute, DateStart, DateEnd)}
                 <View style={style.container}>
                     <View style={style.row}>
                         <TextInput
                             style={style.input}
-                            placeholder="Nhập chữ"
+                            placeholder="Nhập tên thuốc"
                             value={name}
                             onChangeText={(text) => setNameMed(text)}
                         />
                         <TextInput
                             style={style.input}
-                            placeholder="Nhập số"
+                            placeholder="Nhập số lượng"
                             keyboardType="numeric"
                             value={quantity}
                             onChangeText={(text) => setQuantityMed(text)}
+                        />
+                    </View>
+                    <View style={style.row}>
+                        <TextInput
+                            style={style.input}
+                            placeholder="Nhập giờ"
+                            keyboardType="numeric"
+                            value={hours}
+                            onChangeText={(text) => setHours(text)}
+                        />
+                        <TextInput
+                            style={style.input}
+                            placeholder="Nhập phút"
+                            keyboardType="numeric"
+                            value={minutes}
+                            onChangeText={(text) => setMinutes(text)}
                         />
                     </View>
                 </View>
@@ -116,7 +114,7 @@ const PickerData = () => {
                     <Text> {dateFromChild ? formatDateString(dateFromChild[1]) : ''}</Text>
                 </View>
                 <Button title="Tạo thông báo" onPress={handleCreateNotification}/>
-
+                {console.log(formatDateString(dateFromChild[0]), formatDateString(dateFromChild[1]))}
             </View>
         </ScrollView>
     );

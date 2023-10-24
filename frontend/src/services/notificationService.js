@@ -4,7 +4,7 @@ import Notification from "../model/notification.model";
 
 const apiUrl = api.apiUrl;
 
-export const getAllEmployees = async () => {
+export const getAllNotification = async () => {
     try {
         const response = await axios.get(`${apiUrl}/notifications`);
         return response.data;
@@ -14,7 +14,7 @@ export const getAllEmployees = async () => {
     }
 };
 
-export const getEmployeesById = async (notificationId) => {
+export const getNotificationById = async (notificationId) => {
     try {
         const response = await axios.get(`${apiUrl}/notifications/${notificationId}`);
         return response.data;
@@ -28,7 +28,7 @@ export const createNotification = async (notificationData) => {
     try {
         const response = await axios.post(`${apiUrl}/notifications/create`, notificationData);
         // Xử lý phản hồi và tạo một đối tượng Employee từ dữ liệu phản hồi
-        return new Notification(response.data.name, response.data.quantity, response.data.hour, response.data.minute, response.data.DateStart, response.data.DateEnd);
+        return new Notification(response.data.name, response.data.quantity, response.data.hours, response.data.minutes, response.data.dateStart, response.data.dateEnd);
     } catch (error) {
         console.error("Error creating notification:", error);
         throw error;

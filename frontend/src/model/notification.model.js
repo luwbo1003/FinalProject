@@ -1,15 +1,15 @@
 class Notification {
-    DateEnd;
-    DateStart;
+    dateEnd;
+    dateStart;
     Everyday;
     MCName;
     name;
     quantity;
     hour;
     minute;
-    constructor(nam, quantity, hour, minute, DateStart, DateEnd) {
-        this.DateEnd = DateEnd;
-        this.DateStart = DateStart;
+    constructor(nam, quantity, hour, minute, dateStart, dateEnd) {
+        this.DateEnd = dateEnd;
+        this.DateStart = dateStart;
         this.name = name;
         this.quantity = quantity;
         this.hour = hour;

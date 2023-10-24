@@ -6,58 +6,58 @@ import CalendarPicker from "react-native-calendar-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 //Notification
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-    }),
-});
-
-async function schedulePushNotification(hours, minutes) {
-    let date = new Date();
-    test.setHours(parseInt(hours, 10), parseInt(minutes, 10),0);
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            sound: "default",
-            title: 'Đã đến giờ uống thuốc',
-            body: 'Bạn cần uống những loại thuốc sau ...',
-        },
-        trigger: { date: test},
-        // trigger: { seconds: 2},
-    });
-}
-
-async function registerForPushNotificationsAsync() {
-    let token;
-
-    if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-        });
-    }
-
-    if (Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-        }
-        if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-        }
-        token = (await Notifications.getExpoPushTokenAsync({ projectId: 'your-project-id' })).data;
-        console.log(token);
-    } else {
-        alert('Must use physical device for Push Notifications');
-    }
-    return token;
-}
+// Notifications.setNotificationHandler({
+//     handleNotification: async () => ({
+//         shouldShowAlert: true,
+//         shouldPlaySound: true,
+//         shouldSetBadge: false,
+//     }),
+// });
+//
+// async function schedulePushNotification(hours, minutes) {
+//     let date = new Date();
+//     test.setHours(parseInt(hours, 10), parseInt(minutes, 10),0);
+//     await Notifications.scheduleNotificationAsync({
+//         content: {
+//             sound: "default",
+//             title: 'Đã đến giờ uống thuốc',
+//             body: 'Bạn cần uống những loại thuốc sau ...',
+//         },
+//         trigger: { date: test},
+//         // trigger: { seconds: 2},
+//     });
+// }
+//
+// async function registerForPushNotificationsAsync() {
+//     let token;
+//
+//     if (Platform.OS === 'android') {
+//         await Notifications.setNotificationChannelAsync('default', {
+//             name: 'default',
+//             importance: Notifications.AndroidImportance.MAX,
+//             vibrationPattern: [0, 250, 250, 250],
+//             lightColor: '#FF231F7C',
+//         });
+//     }
+//
+//     if (Device.isDevice) {
+//         const { status: existingStatus } = await Notifications.getPermissionsAsync();
+//         let finalStatus = existingStatus;
+//         if (existingStatus !== 'granted') {
+//             const { status } = await Notifications.requestPermissionsAsync();
+//             finalStatus = status;
+//         }
+//         if (finalStatus !== 'granted') {
+//             alert('Failed to get push token for push notification!');
+//             return;
+//         }
+//         token = (await Notifications.getExpoPushTokenAsync({ projectId: 'your-project-id' })).data;
+//         console.log(token);
+//     } else {
+//         alert('Must use physical device for Push Notifications');
+//     }
+//     return token;
+// }
 
 
 
@@ -66,27 +66,27 @@ let test;
 //Calendar
 const CalendarScreen = (props) => {
 
-    //Notification session
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
-    const notificationListener = useRef();
-    const responseListener = useRef();
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
-
-        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-            setNotification(notification);
-        });
-
-        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-            console.log(response);
-        });
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener.current);
-            Notifications.removeNotificationSubscription(responseListener.current);
-        };
-    }, []);
+    // //Notification session
+    // const [expoPushToken, setExpoPushToken] = useState('');
+    // const [notification, setNotification] = useState(false);
+    // const notificationListener = useRef();
+    // const responseListener = useRef();
+    //
+    // useEffect(() => {
+    //     registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+    //
+    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //         setNotification(notification);
+    //     });
+    //
+    //     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+    //         console.log(response);
+    //     });
+    //     return () => {
+    //         Notifications.removeNotificationSubscription(notificationListener.current);
+    //         Notifications.removeNotificationSubscription(responseListener.current);
+    //     };
+    // }, []);
 
 
     //Calendar session
@@ -104,38 +104,20 @@ const CalendarScreen = (props) => {
     };
 
     const sendData = () => {
-        let dateStartSelected = new Date(selectedStartDate.toString());
-        test = dateStartSelected;
+        // let dateStartSelected = new Date(selectedStartDate.toString());
+        // test = dateStartSelected;
+        const dateStartSelected = selectedStartDate.toString()
         const dateEndSelected = selectedEndDate.toString();
-        const dateFromTo = [dateStartSelected.toString(), dateEndSelected, hours.toString(), minutes.toString()];
+        const dateFromTo = [dateStartSelected, dateEndSelected];
         props.onData(dateFromTo);
     }
 
     // Time picker session
 
-    const [hours, setHours] = useState(0)
-    const [minutes, setMinutes] = useState(0)
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (date) => {
-        setHours(parseInt(date.getHours()));
-        setMinutes(parseInt(date.getMinutes()));
-        hideDatePicker();
-    };
 
 
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={styles.container}>
                 <CalendarPicker
                     startFromMonday={true}
@@ -166,28 +148,14 @@ const CalendarScreen = (props) => {
                     onDateChange={onDateChange}
                 />
             </View>
-
             <Button onPress={sendData} title="Chọn ngày"/>
 
-            <View>
-                <Button title="Chọn giờ" onPress={showDatePicker} />
-                <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="time"
-                    is24Hour="en_GB"
-                    date={new Date()}
-                    timePickerModeAndroid="spinner"
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                />
-            </View>
-
-            <Button
-                title="Đặt lịch thông báo"
-                onPress={async () => {
-                    await schedulePushNotification(hours, minutes);
-                }}
-            />
+            {/*<Button*/}
+            {/*    title="Đặt lịch thông báo"*/}
+            {/*    onPress={async () => {*/}
+            {/*        await schedulePushNotification(hours, minutes);*/}
+            {/*    }}*/}
+            {/*/>*/}
         </SafeAreaView>
     );
 };
