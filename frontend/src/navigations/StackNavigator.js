@@ -6,6 +6,7 @@ import UserScreen from "../screens/User/UserScreen";
 import { colors } from "../../styles";
 import { useTranslation } from "react-i18next";
 import LoginScreen from "../screens/Login/LoginScreen";
+import DetailPill from "../screens/Home/DetailPill";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,11 @@ const HomeStackNavigator = () => {
             color: colors.primary04,
           },
         }}
+      />
+
+      <Stack.Screen
+        name="DetailPill" // Thêm màn hình "DetailPill" vào Stack.Navigator
+        component={DetailPill}
       />
     </Stack.Navigator>
   );
@@ -77,4 +83,4 @@ const LoginStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-export { HomeStackNavigator, UserStackNavigator,LoginStackNavigator };
+export { HomeStackNavigator, UserStackNavigator, LoginStackNavigator };

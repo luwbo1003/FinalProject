@@ -1,14 +1,18 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import DailyPill from "../../components/DailyPill";
-
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 const MorningScreen = () => {
   const deviceWidth = Dimensions.get('window').width;
+  const navigation = useNavigation(); // Sử dụng useNavigation để lấy đối tượng navigation
+
+  const navigateToDetailPill = () => {
+    navigation.navigate("DetailPill"); // Điều hướng đến màn hình "DetailPill"
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={navigateToDetailPill}>
         <View style={styles.header}>
           <Text style={styles.headerText}>giờ - DD/MM/YY</Text>
           <TouchableOpacity style={styles.editButton}>
@@ -21,7 +25,7 @@ const MorningScreen = () => {
         <TouchableOpacity style={styles.actionButton}>
           <Text style={styles.actionButtonText}>Uống</Text>
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   card: {
-    width: Dimensions.get('window').width - 20, // Độ rộng bằng với chiều ngang của điện thoại với padding 10 điểm
+    width: Dimensions.get('window').width - 20,
     borderWidth: 1,
     borderColor: 'lightgray',
     borderRadius: 10,
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
-    elevation: 5, // Đối với Android
+    elevation: 5,
   },
   header: {
     flexDirection: 'row',
