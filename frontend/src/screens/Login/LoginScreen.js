@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
 const generateSessionId = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -16,8 +17,7 @@ const generateSessionId = () => {
   return sessionId;
 };
 
-const LoginScreen = () => {
-  const navigation = useNavigation();
+const LoginScreen = ({handleLoginProps}) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [uid, setUid] = useState("");
@@ -83,6 +83,7 @@ const LoginScreen = () => {
         body: JSON.stringify({ sessionId:sessionID,userId:uid,phoneNumber:phoneNumber}),
       });
       setEnableReturnHome(true);
+      handleLoginProps(true);
     } catch (error) {
       console.error(error);
       Alert.alert("Đã xảy ra lỗi khi xác nhận mã OTP.");
@@ -113,14 +114,7 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Nhập</Text>
         </TouchableOpacity>
         </>
-      }
-      {
-        enableReturnHome && 
-        <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.buttonText}>Quay về Home</Text>
-        </TouchableOpacity>
-      }
-      
+      }      
     </View>
   );
 };

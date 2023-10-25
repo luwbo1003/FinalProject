@@ -10,7 +10,6 @@ import LoginScreen from "./src/screens/Login/LoginScreen";
 const App = () => {
   const [isVerify,setIsVerify] = useState(false);
   useEffect(()=>{
-    
     const getSessionId = async () => {
       await AsyncStorage.clear()
       const sessionID = await AsyncStorage.getItem("sessionId");
@@ -23,11 +22,21 @@ const App = () => {
     getSessionId()
   }, []);
 
+  const handleVerify = (props) => {
+    // Xử lý props được truyền từ LoginScreen ở đây
+    console.log(props);
+    if(props){
+      setIsVerify(true)
+    }else{
+      setIsVerify(false)
+    }
+  };
+
   return (
     <>
     {
       <NavigationContainer theme={customTheme}>
-      {isVerify ? <BottomTabNavigator /> : <LoginScreen />}
+      {isVerify ? <BottomTabNavigator /> : <LoginScreen handleLoginProps={handleVerify} />}
       </NavigationContainer>
     }
     </>
