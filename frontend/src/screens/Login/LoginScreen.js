@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
 const generateSessionId = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const sessionIdLength = 10;
@@ -13,11 +15,14 @@ const generateSessionId = () => {
 
   return sessionId;
 };
+
 const LoginScreen = () => {
+  const navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [uid, setUid] = useState("");
   const [otpFlag,setOtpFlag] = useState("");
+  const [enableReturnHome,setEnableReturnHome] = useState(false);
   const sendVerification = async () => {
     try {
       const response = await fetch("http://192.168.1.22:8083/generateOTP", {
@@ -59,14 +64,14 @@ const LoginScreen = () => {
       if (!response.ok) {
         throw new Error("Đã xảy ra lỗi khi xác nhận mã OTP.");
       }
-      setPhoneNumber("");
-  
+
       // Xác nhận mã OTP thành công
       // Thực hiện các hành động tiếp theo sau đăng nhập thành công
       setCode("");
       const sessionID = generateSessionId();
       await AsyncStorage.setItem("userID",uid);
       await AsyncStorage.setItem('sessionId', sessionID);
+      await AsyncStorage.setItem("phoneNumber",phoneNumber);
 
       Alert.alert("Đăng nhập thành công. Chào mừng trở lại trang chủ.");
       // setSession
@@ -75,8 +80,9 @@ const LoginScreen = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sessionId:sessionID,userId:uid}),
+        body: JSON.stringify({ sessionId:sessionID,userId:uid,phoneNumber:phoneNumber}),
       });
+      setEnableReturnHome(true);
     } catch (error) {
       console.error(error);
       Alert.alert("Đã xảy ra lỗi khi xác nhận mã OTP.");
@@ -85,7 +91,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.otpText}>Đăng nhập bằng OTP</Text>
+     <Text style={styles.otpText}>Đăng nhập bằng OTP</Text>
       <TextInput
         placeholder="Nhập số điện thoại của bạn"
         onChangeText={setPhoneNumber}
@@ -107,6 +113,12 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Nhập</Text>
         </TouchableOpacity>
         </>
+      }
+      {
+        enableReturnHome && 
+        <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.buttonText}>Quay về Home</Text>
+        </TouchableOpacity>
       }
       
     </View>
@@ -142,6 +154,12 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRightColor: "#9b59b6",
     borderRadius: 10,
+  },
+  goBackButton: {
+    padding: 20,
+    backgroundColor: "#27ae60",
+    borderRadius: 10,
+    marginTop: 20,
   },
   buttonText: {
     textAlign: "center",

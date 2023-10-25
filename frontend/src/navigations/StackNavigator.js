@@ -14,7 +14,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("123123")}
+        name={t("Home")}
         component={HomeScreen}
         options={{
           headerStyle: {
@@ -42,7 +42,7 @@ const UserStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("13vasdf123")}
+        name={t("User")}
         component={UserScreen}
         options={{
           headerStyle: {
@@ -61,7 +61,7 @@ const LoginStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("123123123")}
+        name={t("Login")}
         component={LoginScreen}
         options={{
           headerStyle: {

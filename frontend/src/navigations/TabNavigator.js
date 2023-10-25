@@ -47,12 +47,6 @@ const BottomTabNavigator = () => {
           component={UserStackNavigator}
           options={{ headerShown: false }}
         />
-        <Tab.Screen
-          key="Login"
-          name={t("ScreenTitle.loginScreenTitle")}
-          component={LoginStackNavigator}
-          options={{ headerShown: false }}
-        />
       </Tab.Navigator>
     </View>
   );

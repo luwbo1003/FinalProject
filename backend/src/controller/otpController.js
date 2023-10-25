@@ -53,7 +53,7 @@ const generateOTP = (req, res) => {
           //   })
           //   .then((message) => {
           //     console.log(`OTP sent to ${phoneNumber}: ${otpCode}`);
-          //     res.status(200).json({ otpId });
+          //     res.status(200).json({ userId });
           //   })
           //   .catch((error) => {
           //     console.error("Error sending OTP:", error);
@@ -118,13 +118,16 @@ const verifyOTP = async (req, res) => {
 
 const setSession = async (req, res) => {
   const sessionId = req.body.sessionId;
-  const userId = req.body.userId; // Giả sử bạn đã có sẵn user ID
+  const userId = req.body.userId;
+  const phoneNumber = req.body.phoneNumber; // Giả sử bạn đã có sẵn user ID
+   // Giả sử bạn đã có sẵn user ID
   
   const db = getDatabase();
   const sessionsRef = db.ref('sessions');
   
   // Tạo một đối tượng session mới với sessionId và userId
   const newSession = {
+    phoneNumber:phoneNumber,
     userId: userId,
     sessionId: sessionId,
   };
