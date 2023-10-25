@@ -2,22 +2,21 @@
     "ScreenTitle": {
         "homeScreenTitle": "Trang chủ",
         "userScreenTitle": "Hồ sơ",
-        "medicationScreenTitle": "Thuốc",
         "morningTabTitle": "Sáng",
-        "afternoonTabTitle": "Trưa",
-        "eveningTabTitle": "Chiều",
-        "pickerDateScreenTitle": "Đặt lịch"
+        "pickerDateTabTitle": "Đặt lịch",
+        "detailTabTitle": "Lịch uống thuốc"
     },
     "ButtonLabel": {
         "addBtn": "Thêm",
         "removeBtn": "Xóa",
         "clearBtn": "Hủy",
-        "addMedBtn": "Tạo thuốc",
+        "checkBtn": "Uống",
         "addReminder": "Tạo lịch nhắc"
     },
-    "InputPlaceholder": {
+    "InputPlacholder": {
         "medName": "Nhập tên thuốc",
-        "medPurpose": "Nhập mục đích sử dụng",
-        "medForm": "Chọn dạng thuốc"
+        "medNumber": "Nhập số lượng",
+        "hour": "Nhập giờ",
+        "minute": "Nhập phút"
     }
 }

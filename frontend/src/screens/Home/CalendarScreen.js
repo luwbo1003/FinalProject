@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-
 import { SafeAreaView, StyleSheet, View, Button } from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
-//Calendar
+
 const CalendarScreen = (props) => {
-  //Calendar session
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
 
   const onDateChange = (date, type) => {
-    //function to handle the date change
     if (type === "END_DATE") {
       setSelectedEndDate(date);
     } else {
@@ -19,8 +16,6 @@ const CalendarScreen = (props) => {
   };
 
   const sendData = () => {
-    // let dateStartSelected = new Date(selectedStartDate.toString());
-    // test = dateStartSelected;
     const dateStartSelected = selectedStartDate.toString();
     const dateEndSelected = selectedEndDate.toString();
     const dateFromTo = [dateStartSelected, dateEndSelected];

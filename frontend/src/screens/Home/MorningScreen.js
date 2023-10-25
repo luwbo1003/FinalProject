@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 const MorningScreen = () => {
   const deviceWidth = Dimensions.get("window").width;
-  const navigation = useNavigation(); // Sử dụng useNavigation để lấy đối tượng navigation
+  const navigation = useNavigation();
 
   const navigateToDetailPill = () => {
-    navigation.navigate("DetailPill"); // Điều hướng đến màn hình "DetailPill"
+    navigation.navigate("DetailPill");
   };
 
   return (
