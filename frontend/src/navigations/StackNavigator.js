@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/Home/HomeScreen";
-import MedicationScreen from "../screens/Medication/MedicationScreen";
 import UserScreen from "../screens/User/UserScreen";
 import PickerDateScreen from "../screens/Home/PickerDateScreen";
 import { colors } from "../../styles";
@@ -39,24 +38,9 @@ const HomeStackNavigator = () => {
           headerTintColor: colors.primary04,
         }}
       />
-    </Stack.Navigator>
-  );
-};
-
-const MedicationlStackNavigator = () => {
-  return (
-    <Stack.Navigator>
       <Stack.Screen
-        name="Pill"
-        component={MedicationScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
+        name="DetailPill" // Thêm màn hình "DetailPill" vào Stack.Navigator
+        component={DetailPill}
       />
     </Stack.Navigator>
   );
@@ -101,9 +85,4 @@ const LoginStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-export {
-  HomeStackNavigator,
-  UserStackNavigator,
-  LoginStackNavigator,
-  MedicationlStackNavigator,
-};
+export { HomeStackNavigator, UserStackNavigator, LoginStackNavigator };

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+
 import { SafeAreaView, StyleSheet, View, Button } from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
-
+//Calendar
 const CalendarScreen = (props) => {
+  //Calendar session
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
 
@@ -17,11 +19,14 @@ const CalendarScreen = (props) => {
   };
 
   const sendData = () => {
+    // let dateStartSelected = new Date(selectedStartDate.toString());
+    // test = dateStartSelected;
     const dateStartSelected = selectedStartDate.toString();
     const dateEndSelected = selectedEndDate.toString();
     const dateFromTo = [dateStartSelected, dateEndSelected];
     props.onData(dateFromTo);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -50,11 +55,11 @@ const CalendarScreen = (props) => {
           todayBackgroundColor="#E0BBE4"
           selectedDayColor="#66ff33"
           selectedDayTextColor="#000000"
-          scaleFactor={370}
+          scaleFactor={350}
           onDateChange={onDateChange}
         />
       </View>
-      <Button onPress={sendData} title={"Tiếp tục"} />
+      <Button onPress={sendData} title="Chọn ngày" />
     </SafeAreaView>
   );
 };
@@ -62,17 +67,15 @@ const CalendarScreen = (props) => {
 export default CalendarScreen;
 
 const styles = StyleSheet.create({
-  //   container: {
-  //     padding: '20px',
-  //     flex: 1,
-  //     backgroundColor: "#ffffff",
-  //     zIndex: 0,
-  //   },
-  //   textStyle: {
-  //     fontSize: 10,
-  //   },
-  //   titleStyle: {
-  //     textAlign: "center",
-  //     fontSize: 10,
-  //   },
+  container: {
+    flex: 1,
+    zIndex: 0,
+  },
+  textStyle: {
+    fontSize: 10,
+  },
+  titleStyle: {
+    textAlign: "center",
+    fontSize: 10,
+  },
 });

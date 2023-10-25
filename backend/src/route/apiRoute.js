@@ -7,6 +7,11 @@ const {
   registerUser,
 } = require("../controller/userController");
 const { generateOTP, verifyOTP } = require("../controller/otpController");
+const {
+  createNotification,
+  getAllNotifications,
+  getNotificationById,
+} = require("../controller/notificationController");
 
 const apiRoute = (app) => {
   //user
@@ -14,9 +19,15 @@ const apiRoute = (app) => {
   apiRouter.get("/users/:userId", getUserById);
   apiRouter.post("/register", registerUser);
 
+  //notification
+  apiRouter.get("/notifications", getAllNotifications);
+  apiRouter.get("/notifications/:notificationId", getNotificationById);
+  apiRouter.post("/notifications/create", createNotification);
+
   //auth
   apiRouter.post("/generateOTP", generateOTP);
   apiRouter.post("/verifyOTP", verifyOTP);
+  apiRouter.post("/api/setSession", setSession);
 
   app.use("/", apiRouter);
 };
