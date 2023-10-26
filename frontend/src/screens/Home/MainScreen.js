@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const MorningScreen = () => {
+const MainScreen = () => {
   const deviceWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
 
-  const navigateToDetailPill = () => {
-    navigation.navigate("DetailPill");
-  };
+  // const navigateToDetailPill = () => {
+  //   navigation.navigate("DetailPill");
+  // };
 
   return (
     <View style={styles.container}>
@@ -29,7 +29,9 @@ const MorningScreen = () => {
           <Text>Text</Text>
         </View>
         <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.actionButtonText}>Uống</Text>
+          <Text style={styles.actionButtonText}>
+            {t("ButtonLabel.checkBtn")}
+          </Text>
         </TouchableOpacity>
       </TouchableOpacity>
     </View>
@@ -88,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MorningScreen;
+export default MainScreen;

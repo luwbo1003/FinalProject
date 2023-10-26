@@ -31,9 +31,9 @@ const apiRoute = (app) => {
   //auth
   apiRouter.post("/generateOTP", generateOTP);
   apiRouter.post("/verifyOTP", verifyOTP);
-  apiRouter.post("/api/setSession", setSession);
+  apiRouter.post("/setSession", setSession);
 
-  app.use("/", apiRouter);
+  app.use("/api", apiRouter);
 };
 
 module.exports = apiRoute;

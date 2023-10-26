@@ -38,18 +38,6 @@ const HomeStackNavigator = () => {
           headerTintColor: colors.primary04,
         }}
       />
-      <Stack.Screen
-        name={t("123123123")}
-        component={LoginScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
-      />
       {/* <Stack.Screen
         name="DetailPill" // Thêm màn hình "DetailPill" vào Stack.Navigator
         component={DetailPill}
@@ -63,7 +51,7 @@ const UserStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("13vasdf123")}
+        name={t("ScreenTitle.userScreenTitle")}
         component={UserScreen}
         options={{
           headerStyle: {

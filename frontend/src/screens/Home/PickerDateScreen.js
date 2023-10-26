@@ -13,8 +13,10 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import CalendarScreen from "./CalendarScreen";
 import { createNotification } from "../../services/notificationService";
+import { useTranslation } from "react-i18next";
 
 const PickerDateScreen = () => {
+  const { t, i18n } = useTranslation();
   const [name, setNameMed] = useState("");
   const [quantity, setQuantityMed] = useState("");
   const [hours, setHours] = useState("");
@@ -152,13 +154,13 @@ const PickerDateScreen = () => {
           <View style={style.row}>
             <TextInput
               style={style.input}
-              placeholder="Nhập tên thuốc"
+              placeholder={t("InputPlaceholder.medName")}
               value={name}
               onChangeText={(text) => setNameMed(text)}
             />
             <TextInput
               style={style.input}
-              placeholder="Nhập số lượng"
+              placeholder={t("InputPlaceholder.medNumber")}
               keyboardType="numeric"
               value={quantity}
               onChangeText={(text) => setQuantityMed(text)}
@@ -167,14 +169,14 @@ const PickerDateScreen = () => {
           <View style={style.row}>
             <TextInput
               style={style.input}
-              placeholder="Nhập giờ"
+              placeholder={t("InputPlaceholder.hour")}
               keyboardType="numeric"
               value={hours}
               onChangeText={(text) => setHours(text)}
             />
             <TextInput
               style={style.input}
-              placeholder="Nhập phút"
+              placeholder={t("InputPlaceholder.minute")}
               keyboardType="numeric"
               value={minutes}
               onChangeText={(text) => setMinutes(text)}
@@ -214,7 +216,7 @@ const PickerDateScreen = () => {
             {dateFromChild ? formatDateString(dateFromChild[1]) : ""}
           </Text>
         </View>
-        <Button title="Tạo thông báo" onPress={handleCreateNotification} />
+        <Button title={t} onPress={handleCreateNotification} />
       </View>
     </ScrollView>
   );

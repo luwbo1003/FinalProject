@@ -54,7 +54,7 @@ const CalendarScreen = (props) => {
           onDateChange={onDateChange}
         />
       </View>
-      <Button onPress={sendData} title="Chọn ngày" />
+      <Button onPress={sendData} title={t("ButtonLabel.selectDate")} />
     </SafeAreaView>
   );
 };

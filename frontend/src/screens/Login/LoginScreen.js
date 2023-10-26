@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const generateSessionId = () => {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -23,8 +23,8 @@ const generateSessionId = () => {
   return sessionId;
 };
 
-const LoginScreen = () => {
-  const navigation = useNavigation();
+const LoginScreen = ({ handleLoginProps }) => {
+  const { t, i18n } = useTranslation();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [uid, setUid] = useState("");
@@ -54,7 +54,7 @@ const LoginScreen = () => {
       setOtpFlag(true);
     } catch (error) {
       console.error(error);
-      Alert.alert("Đã xảy ra lỗi khi gửi mã OTP.");
+      Alert.alert(t("NotifyMessage.otpError"));
     }
   };
 
@@ -80,9 +80,9 @@ const LoginScreen = () => {
       await AsyncStorage.setItem("sessionId", sessionID);
       await AsyncStorage.setItem("phoneNumber", phoneNumber);
 
-      Alert.alert("Đăng nhập thành công. Chào mừng trở lại trang chủ.");
+      Alert.alert(t("NotifyMessage.loginSuccess"));
       // setSession
-      await fetch("http://192.168.100.2:8083/api/setSession", {
+      await fetch("http://192.168.100.2:8083/setSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,17 +94,18 @@ const LoginScreen = () => {
         }),
       });
       setEnableReturnHome(true);
+      handleLoginProps(true);
     } catch (error) {
       console.error(error);
-      Alert.alert("Đã xảy ra lỗi khi xác nhận mã OTP.");
+      Alert.alert(t("NotifyMessage.confirmError"));
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.otpText}>Đăng nhập bằng OTP</Text>
+      <Text style={styles.otpText}>{t("ScreenTitle.loginScreenTitle")}</Text>
       <TextInput
-        placeholder="Nhập số điện thoại của bạn"
+        placeholder={t("InputPlacholder.phoneNumber")}
         onChangeText={setPhoneNumber}
         keyboardType="phone-pad"
         style={styles.textInput}
@@ -118,23 +119,15 @@ const LoginScreen = () => {
       {otpFlag && (
         <>
           <TextInput
-            placeholder="Xác nhận OTP"
+            placeholder={t("InputPlacholder.otpCode")}
             onChangeText={setCode}
             keyboardType="number-pad"
             style={styles.textInput}
           />
           <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-            <Text style={styles.buttonText}>Nhập</Text>
+            <Text style={styles.buttonText}>{t("ButtonLabel.confirmBtn")}</Text>
           </TouchableOpacity>
         </>
-      )}
-      {enableReturnHome && (
-        <TouchableOpacity
-          style={styles.goBackButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Text style={styles.buttonText}>Quay về Home</Text>
-        </TouchableOpacity>
       )}
     </View>
   );

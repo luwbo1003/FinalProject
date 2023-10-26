@@ -1,7 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, StyleSheet } from "react-native";
-import MorningScreen from "./MorningScreen";
+import MainScreen from "./MainScreen";
 import PickerDateScreen from "./PickerDateScreen";
 import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
@@ -21,11 +21,11 @@ const HomeScreen = () => {
         }}
       >
         <Tab.Screen
-          name={t("ScreenTitle.morningTabTitle")}
-          component={MorningScreen}
+          name={t("ScreenTitle.mainTabTitle")}
+          component={MainScreen}
         />
         <Tab.Screen
-          name={t("ScreenTitle.pickerDate")}
+          name={t("ScreenTitle.pickerDateTabTitle")}
           component={PickerDateScreen}
         />
       </Tab.Navigator>
