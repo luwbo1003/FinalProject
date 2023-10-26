@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   HomeStackNavigator,
   LoginStackNavigator,
-  MedicationlStackNavigator,
   UserStackNavigator,
 } from "./StackNavigator";
 import { colors } from "../../styles";
@@ -46,11 +45,6 @@ const BottomTabNavigator = () => {
         <Tab.Screen
           name={t("ScreenTitle.homeScreenTitle")}
           component={HomeStackNavigator}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name={t("ScreenTitle.medicationScreenTitle")}
-          component={MedicationlStackNavigator}
           options={{ headerShown: false }}
         />
         <Tab.Screen

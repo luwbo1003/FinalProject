@@ -6,7 +6,11 @@ const {
   getUserById,
   registerUser,
 } = require("../controller/userController");
-const { generateOTP, verifyOTP } = require("../controller/otpController");
+const {
+  generateOTP,
+  verifyOTP,
+  setSession,
+} = require("../controller/otpController");
 const {
   createNotification,
   getAllNotifications,
