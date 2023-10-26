@@ -6,8 +6,11 @@ import {
   TextInput,
   StyleSheet,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
 
 const generateSessionId = () => {
@@ -32,13 +35,16 @@ const LoginScreen = ({ handleLoginProps }) => {
   const [enableReturnHome, setEnableReturnHome] = useState(false);
   const sendVerification = async () => {
     try {
-      const response = await fetch("http://192.168.100.2:8083/generateOTP", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phoneNumber: phoneNumber }),
-      });
+      const response = await fetch(
+        "http://192.168.100.2:8083/api/generateOTP",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phoneNumber: phoneNumber }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Đã xảy ra lỗi khi gửi mã OTP.");
@@ -60,7 +66,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
   const confirmCode = async () => {
     try {
-      const response = await fetch("http://192.168.100.2:8083/verifyOTP", {
+      const response = await fetch("http://192.168.100.2:8083/api/verifyOTP", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +88,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
       Alert.alert(t("NotifyMessage.loginSuccess"));
       // setSession
-      await fetch("http://192.168.100.2:8083/setSession", {
+      await fetch("http://192.168.100.2:8083/api/setSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,34 +108,39 @@ const LoginScreen = ({ handleLoginProps }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.otpText}>{t("ScreenTitle.loginScreenTitle")}</Text>
-      <TextInput
-        placeholder={t("InputPlacholder.phoneNumber")}
-        onChangeText={setPhoneNumber}
-        keyboardType="phone-pad"
-        style={styles.textInput}
-      />
-      <TouchableOpacity
-        style={styles.sendVerification}
-        onPress={sendVerification}
-      >
-        <Text style={styles.buttonText}>Gửi mã OTP</Text>
-      </TouchableOpacity>
-      {otpFlag && (
-        <>
-          <TextInput
-            placeholder={t("InputPlacholder.otpCode")}
-            onChangeText={setCode}
-            keyboardType="number-pad"
-            style={styles.textInput}
-          />
-          <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-            <Text style={styles.buttonText}>{t("ButtonLabel.confirmBtn")}</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Text style={styles.otpText}>{t("ScreenTitle.loginScreenTitle")}</Text>
+        <TextInput
+          placeholder={t("InputPlaceholder.phoneNumber")}
+          onChangeText={setPhoneNumber}
+          keyboardType="phone-pad"
+          style={styles.textInput}
+        />
+        <TouchableOpacity
+          style={styles.sendVerification}
+          onPress={sendVerification}
+        >
+          <Text style={styles.buttonText}>Gửi mã OTP</Text>
+        </TouchableOpacity>
+        {otpFlag && (
+          <>
+            <TextInput
+              placeholder={t("InputPlaceholder.otpCode")}
+              onChangeText={setCode}
+              keyboardType="numeric"
+              onEndEditing={() => Keyboard.dismiss()}
+              style={styles.textInput}
+            />
+            <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
+              <Text style={styles.buttonText}>
+                {t("ButtonLabel.confirmBtn")}
+              </Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -138,7 +149,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: colors.primary01,
     alignItems: "center",
     justifyContent: "center",
   },

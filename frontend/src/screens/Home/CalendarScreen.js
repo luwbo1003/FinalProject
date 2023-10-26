@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, Button } from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
+import { useTranslation } from "react-i18next";
 
 const CalendarScreen = (props) => {
+  const { t, i18n } = useTranslation();
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
 

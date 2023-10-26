@@ -6,6 +6,7 @@ import PickerDateScreen from "../screens/Home/PickerDateScreen";
 import { colors } from "../../styles";
 import { useTranslation } from "react-i18next";
 import LoginScreen from "../screens/Login/LoginScreen";
+import DetailPillScreen from "../screens/Home/DetailPill";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={"Home"}
+        name={t("ScreenTitle.homeScreenTitle")}
         component={HomeScreen}
         options={{
           headerStyle: {
@@ -38,10 +39,19 @@ const HomeStackNavigator = () => {
           headerTintColor: colors.primary04,
         }}
       />
-      {/* <Stack.Screen
-        name="DetailPill" // Thêm màn hình "DetailPill" vào Stack.Navigator
-        component={DetailPill}
-      /> */}
+      <Stack.Screen
+        name={t("ScreenTitle.detailScreenTitle")}
+        component={DetailPillScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.primary02,
+          },
+          headerTitleStyle: {
+            color: colors.primary04,
+          },
+          headerTintColor: colors.primary04,
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -7,14 +7,17 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { colors } from "../../../styles";
 
 const MainScreen = () => {
+  const { t, i18n } = useTranslation();
   const deviceWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
 
-  // const navigateToDetailPill = () => {
-  //   navigation.navigate("DetailPill");
-  // };
+  const navigateToDetailPill = () => {
+    navigation.navigate(t("ScreenTitle.detailScreenTitle"));
+  };
 
   return (
     <View style={styles.container}>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   actionButton: {
-    backgroundColor: "blue",
+    backgroundColor: colors.primary02,
     borderRadius: 10,
     padding: 10,
     alignItems: "center",

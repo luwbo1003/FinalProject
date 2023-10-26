@@ -4,6 +4,7 @@
         "userScreenTitle": "Hồ sơ",
         "mainTabTitle": "Lịch uống thuốc",
         "pickerDateTabTitle": "Đặt lịch",
+        "detailScreenTitle": "Chi tiết đơn thuốc",
         "loginScreenTitle": "Đăng nhập"
     },
     "ButtonLabel": {
@@ -15,7 +16,7 @@
         "addReminder": "Tạo lịch nhắc",
         "selectDate": "Chọn ngày"
     },
-    "InputPlacholder": {
+    "InputPlaceholder": {
         "phoneNumber": "Nhập số điện thoại",
         "otpCode": "Nhập mã OTP",
         "medName": "Nhập tên thuốc",

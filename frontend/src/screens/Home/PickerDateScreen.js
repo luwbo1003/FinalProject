@@ -216,7 +216,10 @@ const PickerDateScreen = () => {
             {dateFromChild ? formatDateString(dateFromChild[1]) : ""}
           </Text>
         </View>
-        <Button title={t} onPress={handleCreateNotification} />
+        <Button
+          title={t("ButtonLabel.addReminder")}
+          onPress={handleCreateNotification}
+        />
       </View>
     </ScrollView>
   );
