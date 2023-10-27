@@ -12,6 +12,8 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
+import { api } from "../../config/api";
+const apiUrl = api.apiUrl;
 
 const generateSessionId = () => {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -35,16 +37,13 @@ const LoginScreen = ({ handleLoginProps }) => {
   const [enableReturnHome, setEnableReturnHome] = useState(false);
   const sendVerification = async () => {
     try {
-      const response = await fetch(
-        "http://192.168.100.2:8083/api/generateOTP",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ phoneNumber: phoneNumber }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/generateOTP`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phoneNumber: phoneNumber }),
+      });
 
       if (!response.ok) {
         throw new Error("Đã xảy ra lỗi khi gửi mã OTP.");
@@ -66,7 +65,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
   const confirmCode = async () => {
     try {
-      const response = await fetch("http://192.168.100.2:8083/api/verifyOTP", {
+      const response = await fetch(`${apiUrl}/verifyOTP`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +87,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
       Alert.alert(t("NotifyMessage.loginSuccess"));
       // setSession
-      await fetch("http://192.168.100.2:8083/api/setSession", {
+      await fetch(`${apiUrl}/setSession`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +120,7 @@ const LoginScreen = ({ handleLoginProps }) => {
           style={styles.sendVerification}
           onPress={sendVerification}
         >
-          <Text style={styles.buttonText}>Gửi mã OTP</Text>
+          <Text style={styles.buttonText}>{t("ButtonLabel.sendOtp")}</Text>
         </TouchableOpacity>
         {otpFlag && (
           <>
