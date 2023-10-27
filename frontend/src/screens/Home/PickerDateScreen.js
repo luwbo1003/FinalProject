@@ -14,6 +14,7 @@ import * as Notifications from "expo-notifications";
 import CalendarScreen from "./CalendarScreen";
 import { createNotification } from "../../services/notificationService";
 import { useTranslation } from "react-i18next";
+import { colors } from "../../../styles";
 
 const PickerDateScreen = () => {
   const { t, i18n } = useTranslation();
@@ -266,8 +267,12 @@ const style = StyleSheet.create({
   },
   input: {
     flex: 1,
+    height: 48,
+    padding: 8,
     borderWidth: 1,
+    borderRadius: 8,
     marginRight: 8,
+    borderColor: colors.primary01,
   },
 });
 
