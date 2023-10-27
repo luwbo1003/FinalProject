@@ -16,5 +16,5 @@ const firebaseApp = initializeFirebaseApp();
 apiRoute(app, firebaseApp);
 
 app.listen(port, () => {
-  console.log(`Server is running on http://${host}:${port}`);
+  console.log(`Server is running on http://192.168.1.28:${port}`);
 });

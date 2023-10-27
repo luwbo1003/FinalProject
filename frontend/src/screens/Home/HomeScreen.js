@@ -37,14 +37,14 @@ const HomeScreen = () => {
                     {/*    name={t("ScreenTitle.eveningTabTitle")}*/}
                     {/*    component={EveningScreen}*/}
                     {/*/>*/}
-                    {/* <Tab.Screen height={Dimensions.get("window").height}
+                    <Tab.Screen
                         name={t("ScreenTitle.pickerDate")}
                         component={PickerDate}
-                    /> */}
-                    <Tab.Screen
-                        name={t("ScreenTitle.test")}
-                        component={Test}
                     />
+                    {/*<Tab.Screen*/}
+                    {/*    name={t("ScreenTitle.test")}*/}
+                    {/*    component={Test}*/}
+                    {/*/>*/}
                 </Tab.Navigator>
 
                 {/* -------------------------Nút thêm --------------------------- */}

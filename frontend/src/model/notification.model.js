@@ -27,7 +27,6 @@ class Notification{
         this.DateStart = dateStart;
         this.MCName = MCName;
         this.medicines = medicines;
-        this.quantity = quantity;
         this.time = times;
 
     }
