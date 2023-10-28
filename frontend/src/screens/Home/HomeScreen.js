@@ -1,9 +1,9 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, StyleSheet } from "react-native";
-import MorningScreen from "./MorningScreen";
-import PickerDate from "./PickerDate";
-import AddBtn from "../../components/AddBtn";
+import PillScreen from "./PillScreen";
+// import PickerDate from "./PickerDate";
+// import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
 
@@ -22,12 +22,12 @@ const HomeScreen = () => {
       >
         <Tab.Screen
           name={t("ScreenTitle.morningTabTitle")}
-          component={MorningScreen}
+          component={PillScreen}
         />
-          <Tab.Screen
+          {/* <Tab.Screen
               name={t("ScreenTitle.pickerDate")}
               component={PickerDate}
-          />
+          /> */}
       </Tab.Navigator>
 
       {/* -------------------------Nút thêm --------------------------- */}

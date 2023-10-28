@@ -18,6 +18,8 @@ const initializeFirebaseApp = () => {
       console.log("Firebase Realtime Database is not connected");
     }
   });
+  console.log("Firebase App initialized and Realtime Database connection established."); // Thêm dòng này
+
 };
 
 module.exports = {
