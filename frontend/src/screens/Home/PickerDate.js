@@ -13,6 +13,7 @@ import CalendarScreen from "./CalendarScreen";
 import { createNotification } from "../../services/notificationService";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PickerData = () => {
   const [MCName, setMCName] = useState("Đơn thuốc");
@@ -37,28 +38,48 @@ const PickerData = () => {
   let dateStart = formatDateString(dateFromChild[0]);
   let dateEnd = formatDateString(dateFromChild[1]);
 
+  const [uid, setuid] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const retrievedValue = await AsyncStorage.getItem("userID");
+        const stringValue = String(retrievedValue);
+        setuid(stringValue);
+      } catch (error) {
+        console.error("Error retrieving data from AsyncStorage:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleCreateNotification = async () => {
     const times = customTimes.reduce((acc, customField, index) => {
-      acc["idTime" + index] = {
+      const i = index + 1;
+      acc["idTime" + i] = {
         hour: customField.hour,
         min: customField.min,
       };
       return acc;
     }, {});
     const medicines = customMedicines.reduce((acc, customField, index) => {
-      acc["idMed" + index] = {
+      const i = index + 1;
+      acc["idMed" + i] = {
         name: customField.name,
         quantity: customField.quantity,
       };
       return acc;
     }, {});
+    const everday = isEnabled;
     const notificationData = {
+      uid,
       MCName,
       medicines,
       times,
       dateStart,
       dateEnd,
+      everday,
     };
+
     try {
       const response = await createNotification(notificationData);
       console.log("Thông báo đã được tạo:", response);
@@ -351,7 +372,7 @@ const PickerData = () => {
             </View>
           ))}
         </View>
-        {/* -------------------//////////------------------ */}
+        {/* ---------------handleCreateNotification----//////////------------------ */}
         <View>
           <TouchableOpacity onPress={handleCreateNotification}>
             <Text style={style.createnoti}>Tạo thông báo</Text>
@@ -363,185 +384,185 @@ const PickerData = () => {
 };
 
 const style = StyleSheet.create({
-    container: {
-        padding: 15,
-      },
-      calcontainer: {
-        paddingHorizontal: 15,
-        backgroundColor: "#e5e5e5",
-        borderRadius: 10,
-        marginVertical: 15,
-      },
-      time_row: {
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingVertical: 13,
-        paddingHorizontal: 5,
-        alignItems: "center",
-      },
-      cal: {
-        padding: 10,
-        backgroundColor: "#fff",
-        borderRadius: 8,
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 1,
-        shadowColor: "#b0b0b0",
-        shadowRadius: 6,
-        marginBottom: 20,
-        marginTop: 7,
-      },
-      datevalue: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 60,
-        lineHeight: 10,
-      },
-      base: {
-        backgroundColor: "#efefef",
-        borderRadius: 7,
-        padding: 10,
-        marginBottom: 10,
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 1,
-        shadowColor: "#b0b0b0",
-        shadowRadius: 5,
-      },
-      nameofcal: {
-        backgroundColor: "#fff",
-        padding: 7,
-        borderRadius: 4,
-        outlineStyle: "none",
-      },
-      medcontainer: {
-        padding: 15,
-        backgroundColor: "#e5e5e5",
-        borderRadius: 10,
-      },
-      medcontent: {
-        flexDirection: "row",
-        backgroundColor: "#efefef",
-        borderRadius: 7,
-        padding: 10,
-        marginBottom: 10,
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 1,
-        shadowColor: "#b0b0b0",
-        shadowRadius: 5,
-      },
-      medtextinput: {
-        width: "65%",
-        paddingHorizontal: 7,
-        paddingVertical: 7,
-        backgroundColor: "#fff",
-        borderRadius: 4,
-        outlineStyle: "none",
-      },
-    
-      timecontainer: {
-        padding: 15,
-        backgroundColor: "#e5e5e5",
-        alignContent: "center",
-        alignItems: "stretch",
-        borderRadius: 10,
-      },
-      addcal: {
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-      },
-      content: {
-        flexDirection: "row",
-        backgroundColor: "#efefef",
-        borderRadius: 7,
-        padding: 10,
-        marginTop: 10,
-        alignItems: "center",
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 1,
-        shadowColor: "#b0b0b0",
-        shadowRadius: 5,
-      },
-      timeinput: {
-        flexDirection: "row",
-        alignItems: "center",
-        width: "50%",
-        justifyContent: "flex-end",
-      },
-      textinput: {
-        width: "25%",
-        paddingHorizontal: 5,
-        paddingVertical: 7,
-        backgroundColor: "#fff",
-        borderRadius: 5,
-        outlineStyle: "none",
-        textAlign: "center",
-      },
-      textinput1: {
-        width: "15%",
-        paddingHorizontal: 5,
-        paddingVertical: 7,
-        backgroundColor: "#fff",
-        borderRadius: 4,
-        outlineStyle: "none",
-        textAlign: "center",
-      },
-      add: {
-        backgroundColor: "#274c77",
-        fontSize: 14,
-        color: "#fff",
-        lineHeight: 10,
-        paddingHorizontal: 15,
-        padding: 10,
-        borderRadius: 5,
-        textAlign: "center",
-      },
-      delete: {
-        backgroundColor: "#df2c14",
-        fontSize: 16,
-        color: "#fff",
-        lineHeight: 10,
-        padding: 10,
-        borderRadius: 5,
-        marginLeft: 10,
-        textAlign: "center",
-      },
-      addmedicine: {
-        backgroundColor: "#274c77",
-        fontSize: 14,
-        color: "#fff",
-        lineHeight: 10,
-        paddingHorizontal: 15,
-        padding: 10,
-        borderRadius: 5,
-        textAlign: "center",
-      },
-      deletemedicine: {
-        backgroundColor: "#df2c14",
-        fontSize: 16,
-        color: "#fff",
-        lineHeight: 10,
-        padding: 10,
-        borderRadius: 5,
-        textAlign: "center",
-      },
-      createnoti: {
-        backgroundColor: "#274c77",
-        fontSize: 16,
-        color: "#fff",
-        lineHeight: 10,
-        paddingHorizontal: 15,
-        padding: 12,
-        borderRadius: 5,
-        textAlign: "center",
-        marginTop: 15,
-      },
+  container: {
+    padding: 15,
+  },
+  calcontainer: {
+    paddingHorizontal: 15,
+    backgroundColor: "#e5e5e5",
+    borderRadius: 10,
+    marginVertical: 15,
+  },
+  time_row: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 13,
+    paddingHorizontal: 5,
+    alignItems: "center",
+  },
+  cal: {
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowColor: "#b0b0b0",
+    shadowRadius: 6,
+    marginBottom: 20,
+    marginTop: 7,
+  },
+  datevalue: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 60,
+    lineHeight: 10,
+  },
+  base: {
+    backgroundColor: "#efefef",
+    borderRadius: 7,
+    padding: 10,
+    marginBottom: 10,
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowColor: "#b0b0b0",
+    shadowRadius: 5,
+  },
+  nameofcal: {
+    backgroundColor: "#fff",
+    padding: 7,
+    borderRadius: 4,
+    outlineStyle: "none",
+  },
+  medcontainer: {
+    padding: 15,
+    backgroundColor: "#e5e5e5",
+    borderRadius: 10,
+  },
+  medcontent: {
+    flexDirection: "row",
+    backgroundColor: "#efefef",
+    borderRadius: 7,
+    padding: 10,
+    marginBottom: 10,
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowColor: "#b0b0b0",
+    shadowRadius: 5,
+  },
+  medtextinput: {
+    width: "65%",
+    paddingHorizontal: 7,
+    paddingVertical: 7,
+    backgroundColor: "#fff",
+    borderRadius: 4,
+    outlineStyle: "none",
+  },
+
+  timecontainer: {
+    padding: 15,
+    backgroundColor: "#e5e5e5",
+    alignContent: "center",
+    alignItems: "stretch",
+    borderRadius: 10,
+  },
+  addcal: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  content: {
+    flexDirection: "row",
+    backgroundColor: "#efefef",
+    borderRadius: 7,
+    padding: 10,
+    marginTop: 10,
+    alignItems: "center",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowColor: "#b0b0b0",
+    shadowRadius: 5,
+  },
+  timeinput: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "50%",
+    justifyContent: "flex-end",
+  },
+  textinput: {
+    width: "25%",
+    paddingHorizontal: 5,
+    paddingVertical: 7,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    outlineStyle: "none",
+    textAlign: "center",
+  },
+  textinput1: {
+    width: "15%",
+    paddingHorizontal: 5,
+    paddingVertical: 7,
+    backgroundColor: "#fff",
+    borderRadius: 4,
+    outlineStyle: "none",
+    textAlign: "center",
+  },
+  add: {
+    backgroundColor: "#274c77",
+    fontSize: 14,
+    color: "#fff",
+    lineHeight: 10,
+    paddingHorizontal: 15,
+    padding: 10,
+    borderRadius: 5,
+    textAlign: "center",
+  },
+  delete: {
+    backgroundColor: "#df2c14",
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 10,
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+    textAlign: "center",
+  },
+  addmedicine: {
+    backgroundColor: "#274c77",
+    fontSize: 14,
+    color: "#fff",
+    lineHeight: 10,
+    paddingHorizontal: 15,
+    padding: 10,
+    borderRadius: 5,
+    textAlign: "center",
+  },
+  deletemedicine: {
+    backgroundColor: "#df2c14",
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 10,
+    padding: 10,
+    borderRadius: 5,
+    textAlign: "center",
+  },
+  createnoti: {
+    backgroundColor: "#274c77",
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 10,
+    paddingHorizontal: 15,
+    padding: 12,
+    borderRadius: 5,
+    textAlign: "center",
+    marginTop: 15,
+  },
 });
 
 export default PickerData;

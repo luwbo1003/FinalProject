@@ -5,7 +5,7 @@ import HomeScreen from "../screens/Home/HomeScreen";
 import UserScreen from "../screens/User/UserScreen";
 import { colors } from "../../styles";
 import { useTranslation } from "react-i18next";
-import LoginScreen from "../screens/Login/LoginScreen";
+// import LoginScreen from "../screens/Login/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +14,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("123123")}
+        name={t("Hẹn giờ uống thuốc")}
         component={HomeScreen}
         options={{
           headerStyle: {
@@ -42,7 +42,7 @@ const UserStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("13vasdf123")}
+        name={t("Hồ sơ")}
         component={UserScreen}
         options={{
           headerStyle: {
@@ -56,23 +56,23 @@ const UserStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-const LoginStackNavigator = () => {
-  const { t, i18n } = useTranslation();
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={t("123123123")}
-        component={LoginScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.primary02,
-          },
-          headerTitleStyle: {
-            color: colors.primary04,
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-export { HomeStackNavigator, UserStackNavigator,LoginStackNavigator };
+// const LoginStackNavigator = () => {
+//   const { t, i18n } = useTranslation();
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen
+//         name={t("Đăng nhập")}
+//         component={LoginScreen}
+//         options={{
+//           headerStyle: {
+//             backgroundColor: colors.primary02,
+//           },
+//           headerTitleStyle: {
+//             color: colors.primary04,
+//           },
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// };
+export { HomeStackNavigator, UserStackNavigator};
