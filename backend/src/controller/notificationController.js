@@ -250,28 +250,7 @@ const createNotification = async (req, res, firebaseApp) => {
     throw error;
   }
 };
-// const times = [
-//   { hour: "12", min: "00" },
-//   { hour: "12", min: "00" },
-// ];
 
-const PushTime = async (req, res, firebaseApp) => {
-  const db = getDatabase();
-  const times = req.body;
-  console.log(typeof times);
-  try {
-    // Check if the times array is empty
-    if (!times || times.length === 0) {
-      return res.status(400).json({ error: "Missing required times array" });
-    }
-    await db.ref("MedicineCalendar/userId/MCId3").update({ times });
-    // await db.ref("Test_time").update(times);
-  } catch (error) {
-    console.error("Error pushing times:", error);
-    res.status(500).json({ error: "An error occurred while pushing times" });
-    throw error;
-  }
-};
 const addNotificationPicker = async (req, res, firebaseApp) => {
   const db = getDatabase();
   let MCId = 1,
@@ -321,5 +300,4 @@ module.exports = {
   addNotificationPicker,
   getAllNotifications,
   getNotificationById,
-  PushTime,
 };

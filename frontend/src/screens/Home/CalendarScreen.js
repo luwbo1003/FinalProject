@@ -36,7 +36,7 @@ const CalendarScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
-        <CalendarPicker
+      <CalendarPicker
           startFromMonday={true}
           allowRangeSelection={true}
           minDate={new Date()}
@@ -56,11 +56,11 @@ const CalendarScreen = (props) => {
             "November",
             "December",
           ]}
-          previousTitle="Prev"
-          nextTitle="Next"
-          todayBackgroundColor="#E0BBE4"
-          selectedDayColor="#66ff33"
-          selectedDayTextColor="#000000"
+          previousTitle="◀◀"
+          nextTitle="▶▶"
+          todayBackgroundColor="#588158e6"
+          selectedDayColor="#274c77d9"
+          selectedDayTextColor="#fff"
           onDateChange={onDateChange}
           width={width - 60}
         />
