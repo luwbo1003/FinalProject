@@ -2,6 +2,7 @@ const express = require("express");
 const apiRouter = express.Router();
 
 const { getAllUsers, getUserById } = require("../controller/userController");
+
 const {
   generateOTP,
   verifyOTP,

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPillByUserID } from "../../services/pillService";
-import PillItem from "../../components/PillItem";
+import PillItem from "../../components/Pill/PillItem";
 
 const PillScreen = () => {
   const [uid, setUid] = useState("");
