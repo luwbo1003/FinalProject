@@ -19,7 +19,15 @@ const getPillByUserID = async (req, res, firebaseApp) => {
   try {
     const snapshot = await db.ref(`MedicineCalendar/${userId}`).once("value");
     const data = snapshot.val();
-    res.status(200).json(data);
+
+    const dt = [];
+    for (const k in data) {
+      const child_data = data[k];
+      for (const time in child_data.Time) {
+        dt.push({ id: k, MCName: data[k].MCName, hour: child_data.Time[time].hour, min: child_data.Time[time].min });
+      }
+    }
+    res.status(200).json(dt);
   } catch (error) {
     console.error("Error fetching forms:", error);
     res.status(500).json({ error: "An error occurred" });
