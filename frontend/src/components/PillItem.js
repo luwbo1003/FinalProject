@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import React from "react";
 import { colors } from "../../styles";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 export default function PillItem({ hour, min, mcName }) {
   //   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -25,9 +27,15 @@ export default function PillItem({ hour, min, mcName }) {
   //     setSelectedOption(option);
   //     closeDropdown();
   //   };
+  const navigation = useNavigation();
+  const { t, i18n } = useTranslation();
+
+  const handleNavigate = () => {
+    navigation.navigate(t("ScreenTitle.detailScreenTitle"));
+  };
 
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={handleNavigate}>
       <View style={styles.header}>
         <Text style={styles.headerText}>
           {hour}:{min}
