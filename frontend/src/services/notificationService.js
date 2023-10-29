@@ -32,14 +32,14 @@ export const createNotification = async (notificationData) => {
       `${apiUrl}/notifications/create`,
       notificationData
     );
-    // Xử lý phản hồi và tạo một đối tượng Employee từ dữ liệu phản hồi
     return new Notification(
-      response.data.name,
-      response.data.quantity,
-      response.data.hours,
-      response.data.minutes,
+      response.data.MCName,
+      response.data.medicines,
+      response.data.times,
       response.data.dateStart,
-      response.data.dateEnd
+      response.data.dateEnd,
+      response.data.uid,
+      response.data.everyday
     );
   } catch (error) {
     console.error("Error creating notification:", error);

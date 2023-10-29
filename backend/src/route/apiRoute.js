@@ -1,11 +1,7 @@
 const express = require("express");
 const apiRouter = express.Router();
 
-const {
-  getAllUsers,
-  getUserById,
-  registerUser,
-} = require("../controller/userController");
+const { getAllUsers, getUserById } = require("../controller/userController");
 const {
   generateOTP,
   verifyOTP,
@@ -18,20 +14,17 @@ const {
 } = require("../controller/notificationController");
 
 const apiRoute = (app) => {
-  //user
+  //auth
   apiRouter.get("/users", getAllUsers);
   apiRouter.get("/users/:userId", getUserById);
-  apiRouter.post("/register", registerUser);
 
-  //notification
+  apiRouter.post("/generateOTP", generateOTP);
+  apiRouter.post("/verifyOTP", verifyOTP);
+  apiRouter.post("/api/setSession", setSession);
+
   apiRouter.get("/notifications", getAllNotifications);
   apiRouter.get("/notifications/:notificationId", getNotificationById);
   apiRouter.post("/notifications/create", createNotification);
-
-  //auth
-  apiRouter.post("/generateOTP", generateOTP);
-  apiRouter.post("/verifyOTP", verifyOTP);
-  apiRouter.post("/setSession", setSession);
 
   app.use("/api", apiRouter);
 };

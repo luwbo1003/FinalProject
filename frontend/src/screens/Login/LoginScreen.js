@@ -110,32 +110,31 @@ const LoginScreen = ({ handleLoginProps }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Text style={styles.otpText}>{t("ScreenTitle.loginScreenTitle")}</Text>
-        <TextInput
-          placeholder={t("InputPlaceholder.phoneNumber")}
-          onChangeText={setPhoneNumber}
-          keyboardType="phone-pad"
-          style={styles.textInput}
-        />
-        <TouchableOpacity
-          style={styles.sendVerification}
-          onPress={sendVerification}
-        >
-          <Text style={styles.buttonText}>{t("ButtonLabel.sendOtp")}</Text>
-        </TouchableOpacity>
+        <Text style={styles.login_title}>
+          {t("ScreenTitle.loginScreenTitle")}
+        </Text>
+        <View style={styles.phone_frame}>
+          <TextInput
+            style={styles.phone_input}
+            placeholder={t("InputPlaceholder.phoneNumber")}
+            onChangeText={setPhoneNumber}
+          />
+          <TouchableOpacity style={styles.btn_send} onPress={sendVerification}>
+            <Text>{t("ButtonLabel.sendOtp")}</Text>
+          </TouchableOpacity>
+        </View>
         {otpFlag && (
           <>
-            <TextInput
-              placeholder={t("InputPlaceholder.otpCode")}
-              onChangeText={setCode}
-              keyboardType="numeric"
-              onEndEditing={() => Keyboard.dismiss()}
-              style={styles.textInput}
-            />
-            <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-              <Text style={styles.buttonText}>
-                {t("ButtonLabel.confirmBtn")}
-              </Text>
+            <View style={{ width: "100%", marginVertical: 24 }}>
+              <TextInput
+                placeholder={t("InputPlaceholder.otpCode")}
+                onChangeText={setCode}
+                keyboardType="number-pad"
+                style={styles.otp_input}
+              />
+            </View>
+            <TouchableOpacity style={styles.btn_login} onPress={confirmCode}>
+              <Text style={styles.btn_text}>{t("ButtonLabel.confirmBtn")}</Text>
             </TouchableOpacity>
           </>
         )}
@@ -148,47 +147,80 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
+    padding: 40,
     flex: 1,
-    backgroundColor: colors.primary01,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.neutro01,
   },
-  textInput: {
-    paddingTop: 40,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
+  login_title: {
     fontSize: 24,
-    borderBottomColor: "#fff",
-    borderBottomWidth: 2,
-    marginBottom: 20,
+    fontWeight: "bold",
+    color: colors.primary01,
+    marginBottom: 70,
+  },
+  phone_frame: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  phone_input: {
+    width: "65%",
+    padding: 20,
+    fontSize: 16,
+    borderRadius: 10,
+    outlineStyle: "none",
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 1,
+    shadowColor: "#c8c8c8",
+    shadowRadius: 24,
+    backgroundColor: "#f5f5f5",
+    lineHeight: 24,
+  },
+  btn_send: {
+    width: "30%",
+    height: "100%",
+    padding: 20,
+    fontSize: 16,
+    borderRadius: 8,
+    outlineStyle: "none",
+    shadowOffset: { width: 10, height: 10 },
+    alignItems: "center",
+    shadowOpacity: 1,
+    shadowColor: "#c8c8c8",
+    shadowRadius: 24,
+    backgroundColor: colors.neutro02,
+    lineHeight: 24,
+  },
+  otp_input: {
+    padding: 20,
+    fontSize: 18,
+    borderRadius: 10,
+    outlineStyle: "none",
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 1,
+    shadowColor: "#c8c8c8",
+    shadowRadius: 24,
+    backgroundColor: "#f5f5f5",
+  },
+  btn_login: {
+    width: "100%",
+    padding: 20,
+    borderRadius: 10,
+    padding: 20,
+    fontSize: 18,
+    fontWeight: "600",
     textAlign: "center",
-    color: "#fff",
-  },
-  sendVerification: {
-    padding: 20,
-    borderRightColor: "#3498db",
     borderRadius: 10,
-  },
-  sendCode: {
-    padding: 20,
-    borderRightColor: "#9b59b6",
-    borderRadius: 10,
-  },
-  goBackButton: {
-    padding: 20,
-    backgroundColor: "#27ae60",
-    borderRadius: 10,
+    backgroundColor: colors.primary01,
+    lineHeight: 24,
+    color: "white",
     marginTop: 20,
   },
-  buttonText: {
+  btn_text: {
     textAlign: "center",
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  otpText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#fff",
-    margin: 20,
+    fontSize: 16,
+    color: colors.primary04,
   },
 });

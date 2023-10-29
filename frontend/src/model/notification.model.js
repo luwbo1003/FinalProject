@@ -1,19 +1,12 @@
 class Notification {
-  dateEnd;
-  dateStart;
-  Everyday;
-  MCName;
-  name;
-  quantity;
-  hour;
-  minute;
-  constructor(name, quantity, hour, minute, dateStart, dateEnd) {
-    this.DateEnd = dateEnd;
-    this.DateStart = dateStart;
-    this.name = name;
-    this.quantity = quantity;
-    this.hour = hour;
-    this.minute = minute;
+  constructor(uid, MCName, medicines, times, dateStart, dateEnd, everday) {
+    this.dateEnd = dateEnd;
+    this.dateStart = dateStart;
+    this.uid = uid;
+    this.MCName = MCName;
+    this.medicines = medicines;
+    this.times = times;
+    this.everday = everday;
   }
 }
 
