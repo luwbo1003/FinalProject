@@ -40,7 +40,34 @@ const getPillByUserID = async (req, res, firebaseApp) => {
   }
 };
 
+const getMedicineListByUserID = async (req, res, firebaseApp) => {
+  const db = getDatabase();
+  const userId = req.params.userId;
+
+  try {
+    const snapshot = await db.ref(`MedicineCalendar/${userId}`).once("value");
+    const data = snapshot.val();
+
+    const medicineList = [];
+    for (const medicineId in data) {
+      const medicine = data[medicineId];
+      medicineList.push({
+        id: medicineId,
+        name: medicine.name,
+        quantity: medicine.quantity,
+      });
+    }
+
+    res.status(200).json(medicineList);
+  } catch (error) {
+    console.error("Error fetching medicine list:", error);
+    res.status(500).json({ error: "An error occurred" });
+    throw error;
+  }
+};
+
 module.exports = {
   getAllPills,
   getPillByUserID,
+  getMedicineListByUserID,
 };

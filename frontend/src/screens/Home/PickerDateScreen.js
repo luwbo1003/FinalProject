@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import CalendarScreen from "./CalendarScreen";
 import { createNotification } from "../../services/notificationService";
-import { colors } from "../../../styles";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { colors } from "../../../styles";
 
 const PickerData = () => {
   const [MCName, setMCName] = useState("Đơn thuốc");

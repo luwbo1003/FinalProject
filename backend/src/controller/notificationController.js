@@ -29,6 +29,18 @@ const getNotificationById = async (req, res, firebaseApp) => {
     throw error;
   }
 };
+// const MCName = "Test";
+// const times = [
+//   { hour: "12", min: "00" },
+//   { hour: "12", min: "00" },
+// ];
+// const medicines = [
+//   { name: "medincine name", quantiy: "01" },
+//   { name: "medincine name", quantiy: "01" },
+// ];
+// const dateStart = "22/10/2023";
+// const dateEnd = "25/10/2023";
+// const uid = "47010663-66e9-42e0-a057-0d9006ff7fd9";
 
 const createNotification = async (req, res, firebaseApp) => {
   const db = getDatabase();

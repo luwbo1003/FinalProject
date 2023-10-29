@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View, Button } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
-import { useTranslation } from "react-i18next";
+import { colors } from "../../../styles";
 
+//Calendar
 const CalendarScreen = (props) => {
-  const { t, i18n } = useTranslation();
+  //Calendar session
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
 
   const onDateChange = (date, type) => {
+    //function to handle the date change
     if (type === "END_DATE") {
       setSelectedEndDate(date);
     } else {
@@ -24,9 +33,11 @@ const CalendarScreen = (props) => {
     props.onData(dateFromTo);
   };
 
+  const width = Dimensions.get("window").width;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+    <SafeAreaView>
+      <View>
         <CalendarPicker
           startFromMonday={true}
           allowRangeSelection={true}
@@ -47,32 +58,38 @@ const CalendarScreen = (props) => {
             "November",
             "December",
           ]}
-          previousTitle="Prev"
-          nextTitle="Next"
-          todayBackgroundColor="#E0BBE4"
-          selectedDayColor="#66ff33"
-          selectedDayTextColor="#000000"
-          scaleFactor={350}
+          previousTitle="◀◀"
+          nextTitle="▶▶"
+          todayBackgroundColor="#588158e6"
+          selectedDayColor="#274c77d9"
+          selectedDayTextColor="#fff"
           onDateChange={onDateChange}
+          width={width - 60}
         />
       </View>
-      <Button onPress={sendData} title={t("ButtonLabel.selectDate")} />
+      <View>
+        <TouchableOpacity onPress={sendData}>
+          <Text style={style.pickdate}>Chọn ngày</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
-export default CalendarScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    zIndex: 0,
-  },
-  textStyle: {
-    fontSize: 10,
-  },
-  titleStyle: {
+const style = StyleSheet.create({
+  pickdate: {
+    width: "40%",
+    backgroundColor: colors.primary01,
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#fff",
+    lineHeight: 10,
+    padding: 10,
+    borderRadius: 5,
     textAlign: "center",
-    fontSize: 10,
+    alignSelf: "center",
+    marginBottom: 2,
   },
 });
+
+export default CalendarScreen;

@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  FlatList,
-  Modal,
-} from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPillByUserID } from "../../services/pillService";
-import PillItem from "../../components/Pill/PillItem";
+import PillItem from "../../components/PillItem";
 
 const PillScreen = () => {
   const [uid, setUid] = useState("");
-  const [pill, setPill] = useState();
+  const [pill, setPill] = useState([]);
 
+  // Fetch user ID from AsyncStorage
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,8 +19,9 @@ const PillScreen = () => {
       }
     };
     fetchData();
-  }, []); // Mảng phụ thuộc rỗng để chỉ gọi một lần khi component được render
+  }, []);
 
+  // Fetch pill data based on the user's ID
   useEffect(() => {
     const fetchPillData = async () => {
       try {
@@ -37,13 +31,13 @@ const PillScreen = () => {
         console.error("Error fetching pill:", error);
       }
     };
-    fetchPillData();
+    if (uid) {
+      fetchPillData();
+    }
   }, [uid]);
-  console.log(pill);
 
-  function renderMealItem(itemData) {
-    const item = itemData.item;
-
+  // Render individual pill items
+  function renderPillItem({ item }) {
     const pillItemProps = {
       mcName: item.MCName,
       hour: item.hour,
@@ -57,7 +51,7 @@ const PillScreen = () => {
       <FlatList
         data={pill}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={renderMealItem}
+        renderItem={renderPillItem}
       />
     </View>
   );
