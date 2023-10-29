@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { colors } from "../../../styles";
 
 export default function PillItem({ hour, min, mcName }) {
 //   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -50,8 +51,9 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 3,
+    shadowRadius: 1,
     elevation: 5,
+    marginBottom: 10
   },
   header: {
     flexDirection: "row",
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   actionButton: {
-    backgroundColor: "blue",
+    backgroundColor: colors.primary01,
     borderRadius: 10,
     padding: 10,
     alignItems: "center",
