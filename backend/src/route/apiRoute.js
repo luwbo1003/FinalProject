@@ -12,6 +12,10 @@ const {
   getAllNotifications,
   getNotificationById,
 } = require("../controller/notificationController");
+const {
+  getAllPills,
+  getPillByUserID,
+} = require("../controller/pillController");
 
 const apiRoute = (app) => {
   //auth
@@ -20,11 +24,14 @@ const apiRoute = (app) => {
 
   apiRouter.post("/generateOTP", generateOTP);
   apiRouter.post("/verifyOTP", verifyOTP);
-  apiRouter.post("/api/setSession", setSession);
+  apiRouter.post("/setSession", setSession);
 
   apiRouter.get("/notifications", getAllNotifications);
   apiRouter.get("/notifications/:notificationId", getNotificationById);
   apiRouter.post("/notifications/create", createNotification);
+
+  apiRouter.get("/getAllPills", getAllPills);
+  apiRouter.get("/getPillByUserID/:userId", getPillByUserID);
 
   app.use("/api", apiRouter);
 };

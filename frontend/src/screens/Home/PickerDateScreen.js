@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import CalendarScreen from "./CalendarScreen";
 import { createNotification } from "../../services/notificationService";
+import { colors } from "../../../styles";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -514,7 +515,7 @@ const style = StyleSheet.create({
     textAlign: "center",
   },
   add: {
-    backgroundColor: "#274c77",
+    backgroundColor: colors.primary01,
     fontSize: 14,
     color: "#fff",
     lineHeight: 10,
@@ -534,7 +535,7 @@ const style = StyleSheet.create({
     textAlign: "center",
   },
   addmedicine: {
-    backgroundColor: "#274c77",
+    backgroundColor: colors.primary01,
     fontSize: 14,
     color: "#fff",
     lineHeight: 10,
@@ -553,7 +554,7 @@ const style = StyleSheet.create({
     textAlign: "center",
   },
   createnoti: {
-    backgroundColor: "#274c77",
+    backgroundColor: colors.primary01,
     fontSize: 16,
     color: "#fff",
     lineHeight: 10,
