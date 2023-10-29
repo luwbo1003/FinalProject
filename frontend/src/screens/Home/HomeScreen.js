@@ -6,6 +6,7 @@ import PickerDateScreen from "./PickerDateScreen";
 import AddBtn from "../../components/AddBtn";
 import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
+import PillScreen from "./PillScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -22,7 +23,7 @@ const HomeScreen = () => {
       >
         <Tab.Screen
           name={t("ScreenTitle.mainTabTitle")}
-          component={MainScreen}
+          component={PillScreen}
         />
         <Tab.Screen
           name={t("ScreenTitle.pickerDateTabTitle")}

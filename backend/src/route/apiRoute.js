@@ -2,16 +2,9 @@ const express = require("express");
 const apiRouter = express.Router();
 
 const { getAllUsers, getUserById } = require("../controller/userController");
-const {
-  generateOTP,
-  verifyOTP,
-  setSession,
-} = require("../controller/otpController");
-const {
-  createNotification,
-  getAllNotifications,
-  getNotificationById,
-} = require("../controller/notificationController");
+const { getAllPills, getPillByUserID } = require("../controller/pillController");
+const { generateOTP, verifyOTP, setSession } = require("../controller/otpController");
+const { createNotification, getAllNotifications, getNotificationById } = require("../controller/notificationController");
 
 const apiRoute = (app) => {
   //auth
@@ -25,6 +18,9 @@ const apiRoute = (app) => {
   apiRouter.get("/notifications", getAllNotifications);
   apiRouter.get("/notifications/:notificationId", getNotificationById);
   apiRouter.post("/notifications/create", createNotification);
+
+  apiRouter.get("/getAllPills", getAllPills);
+  apiRouter.get("/getPillByUserID/:userId", getPillByUserID);
 
   app.use("/api", apiRouter);
 };
