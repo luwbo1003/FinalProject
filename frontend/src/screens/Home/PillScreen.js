@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import { getAllPills, getPillByUserID } from "../../services/pillService";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, FlatList, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getPillByUserID } from "../../services/pillService";
 
 const PillScreen = () => {
   const [mcName, setMcName] = useState("");
   const [hour, setHour] = useState("");
   const [min, setMin] = useState("");
   const [uid, setUid] = useState("");
-
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,13 +22,27 @@ const PillScreen = () => {
         setMcName(response.MCId1.MCName);
         setHour(response.MCId1.Time.idTime1.hour);
         setMin(response.MCId1.Time.idTime1.min);
-        console.log(response); // In dữ liệu ra console
+        setDropdownOptions(["Sửa", "Xóa"]);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching pill:", error);
       }
     };
     fetchData();
   }, [uid]);
+
+  const openDropdown = () => {
+    setDropdownVisible(true);
+  };
+
+  const closeDropdown = () => {
+    setDropdownVisible(false);
+  };
+
+  const handleDropdownOptionSelect = (option) => {
+    setSelectedOption(option);
+    closeDropdown();
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +51,7 @@ const PillScreen = () => {
           <Text style={styles.headerText}>
             {hour}:{min}
           </Text>
-          <TouchableOpacity style={styles.editButton}>
+          <TouchableOpacity style={styles.editButton} onPress={openDropdown}>
             <Text style={styles.editButtonText}>...</Text>
           </TouchableOpacity>
         </View>
@@ -45,6 +61,20 @@ const PillScreen = () => {
         <TouchableOpacity style={styles.actionButton}>
           <Text style={styles.actionButtonText}>Uống</Text>
         </TouchableOpacity>
+        {isDropdownVisible && (
+          <View style={styles.dropdownContainer}>
+            <FlatList
+              data={dropdownOptions}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleDropdownOptionSelect(item)}>
+                  <Text style={styles.dropdownItem}>{item}</Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item}
+            />
+          </View>
+        )}
+        {selectedOption && <Text>Đã chọn: {selectedOption}</Text>}
       </TouchableOpacity>
     </View>
   );
@@ -99,6 +129,21 @@ const styles = StyleSheet.create({
   actionButtonText: {
     color: "white",
     fontSize: 16,
+  },
+  dropdownContainer: {
+    position: "absolute",
+    top: 40,
+    right: 10,
+    backgroundColor: "white",
+    borderColor: "lightgray",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  dropdownItem: {
+    padding: 15,
+    fontSize: 18,
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
   },
 });
 
