@@ -75,6 +75,7 @@ const createNotification = async (req, res, firebaseApp) => {
             await notiRef.set(newDatePick);
             await medListRef.set(medicines);
             await medTimetRef.set(times);
+            console.log("else 1");
             return;
           }
         }
@@ -91,6 +92,7 @@ const createNotification = async (req, res, firebaseApp) => {
         await notiRef.set(newDatePick);
         await medListRef.set(medicines);
         await medTimetRef.set(times);
+        console.log("else 2");
       }
     });
     res.status(200).json({ message: "Notification picker added successfully" });
