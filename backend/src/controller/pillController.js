@@ -49,13 +49,15 @@ const getMedicineListByUserID = async (req, res, firebaseApp) => {
     const data = snapshot.val();
 
     const medicineList = [];
-    for (const medicineId in data) {
-      const medicine = data[medicineId];
-      medicineList.push({
-        id: medicineId,
-        name: medicine.name,
-        quantity: medicine.quantity,
-      });
+    for (const k in data) {
+      const child = data[k];
+      for (const medicineId in child.MedicineList) {
+        medicineList.push({
+          id: k,
+          name: child.MedicineList[medicineId].name,
+          quantity: child.MedicineList[medicineId].quantity,
+        });
+      }
     }
 
     res.status(200).json(medicineList);

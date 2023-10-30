@@ -81,7 +81,7 @@ const LoginStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={t("123123123")}
+        name={t("ScreenTitle.loginScreenTitle")}
         component={LoginScreen}
         options={{
           headerStyle: {

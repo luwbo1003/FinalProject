@@ -16,6 +16,7 @@ const {
 const {
   getAllPills,
   getPillByUserID,
+  getMedicineListByUserID,
 } = require("../controller/pillController");
 
 const apiRoute = (app) => {
@@ -33,6 +34,7 @@ const apiRoute = (app) => {
 
   apiRouter.get("/getAllPills", getAllPills);
   apiRouter.get("/getPillByUserID/:userId", getPillByUserID);
+  apiRouter.get("/getMedicineListByUserID/:userId", getMedicineListByUserID);
 
   app.use("/api", apiRouter);
 };

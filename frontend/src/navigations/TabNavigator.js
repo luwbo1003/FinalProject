@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  HomeStackNavigator,
-  LoginStackNavigator,
-  UserStackNavigator,
-} from "./StackNavigator";
+import { HomeStackNavigator, UserStackNavigator } from "./StackNavigator";
 import { colors } from "../../styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useTranslation } from "react-i18next";
@@ -26,14 +22,10 @@ const BottomTabNavigator = () => {
 
             if (route.name === t("ScreenTitle.homeScreenTitle")) {
               iconName = "home";
-            } else if (route.name === t("ScreenTitle.medicationScreenTitle")) {
-              iconName = "pill";
             } else if (route.name === t("ScreenTitle.userScreenTitle")) {
               iconName = "account";
             }
-            //else if (route.name === t("ScreenTitle.userScreenTitle")) {
-            //   iconName = "account";
-            // }
+
             const iconColor = focused ? colors.primary04 : colors.primary01;
 
             return <Icon name={iconName} size={size} color={iconColor} />;

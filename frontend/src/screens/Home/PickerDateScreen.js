@@ -252,7 +252,6 @@ const PickerData = () => {
           projectId: "your-project-id",
         })
       ).data;
-      console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -436,7 +435,6 @@ const style = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 7,
     borderRadius: 4,
-    outlineStyle: "none",
   },
   medcontainer: {
     padding: 15,
@@ -462,7 +460,6 @@ const style = StyleSheet.create({
     paddingVertical: 7,
     backgroundColor: "#fff",
     borderRadius: 4,
-    outlineStyle: "none",
   },
 
   timecontainer: {
@@ -502,7 +499,6 @@ const style = StyleSheet.create({
     paddingVertical: 7,
     backgroundColor: "#fff",
     borderRadius: 5,
-    outlineStyle: "none",
     textAlign: "center",
   },
   textinput1: {
@@ -511,7 +507,6 @@ const style = StyleSheet.create({
     paddingVertical: 7,
     backgroundColor: "#fff",
     borderRadius: 4,
-    outlineStyle: "none",
     textAlign: "center",
   },
   add: {

@@ -22,3 +22,14 @@ export const getPillByUserID = async (userId) => {
     throw error;
   }
 };
+
+export const getMedicineListByUserID = async (userId) => {
+  try {
+    const response = await fetch(`${apiUrl}/getMedicineListByUserID/${userId}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching medicines:", error);
+    throw error;
+  }
+};
