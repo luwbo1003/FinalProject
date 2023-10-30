@@ -1,13 +1,10 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, StyleSheet } from "react-native";
-import MorningScreen from "./MorningScreen";
-import NoonScreen from "./NoonScreen";
-import EveningScreen from "./EveningScreen";
-import PickerDate from "./PickerDate";
-import AddBtn from "../../components/AddBtn";
+import PickerDateScreen from "./PickerDateScreen";
 import { colors } from "../../../styles";
 import { useTranslation } from "react-i18next";
+import PillScreen from "./PillScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -23,30 +20,14 @@ const HomeScreen = () => {
         }}
       >
         <Tab.Screen
-          name={t("ScreenTitle.morningTabTitle")}
-          component={MorningScreen}
+          name={t("ScreenTitle.mainTabTitle")}
+          component={PillScreen}
         />
         <Tab.Screen
-          name={t("ScreenTitle.afternoonTabTitle")}
-          component={NoonScreen}
+          name={t("ScreenTitle.pickerDateTabTitle")}
+          component={PickerDateScreen}
         />
-        <Tab.Screen
-          name={t("ScreenTitle.eveningTabTitle")}
-          component={EveningScreen}
-        />
-          <Tab.Screen
-              name={t("ScreenTitle.pickerDate")}
-              component={PickerDate}
-          />
       </Tab.Navigator>
-
-      {/* -------------------------Nút thêm --------------------------- */}
-      {/*<View style={styles.btnStyle}>*/}
-      {/*  <View style={styles.addBtn}>*/}
-      {/*    <AddBtn />*/}
-      {/*  </View>*/}
-      {/*</View>*/}
-      {/* --------------------------Nút thêm -------------------------- */}
     </View>
   );
 };

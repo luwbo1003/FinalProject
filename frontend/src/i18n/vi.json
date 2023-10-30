@@ -2,12 +2,32 @@
     "ScreenTitle": {
         "homeScreenTitle": "Trang chủ",
         "userScreenTitle": "Hồ sơ",
-        "morningTabTitle": "Sáng",
-        "afternoonTabTitle": "Trưa",
-        "eveningTabTitle": "Chiều",
-        "pickerDate": "Đặt lịch"
+        "mainTabTitle": "Lịch uống thuốc",
+        "pickerDateTabTitle": "Đặt lịch",
+        "detailScreenTitle": "Chi tiết đơn thuốc",
+        "loginScreenTitle": "Đăng nhập"
     },
     "ButtonLabel": {
-        "addBtn": "Thêm"
+        "addBtn": "Thêm",
+        "removeBtn": "Xóa",
+        "clearBtn": "Hủy",
+        "checkBtn": "Uống",
+        "confirmBtn": "Xác nhận",
+        "sendOtp": "Gửi OTP",
+        "addReminder": "Tạo lịch nhắc",
+        "selectDate": "Chọn ngày"
+    },
+    "InputPlaceholder": {
+        "phoneNumber": "Nhập số điện thoại",
+        "otpCode": "Nhập mã OTP",
+        "medName": "Nhập tên thuốc",
+        "medNumber": "Nhập số lượng",
+        "hour": "Nhập giờ",
+        "minute": "Nhập phút"
+    },
+    "NotifyMessage": {
+        "otpError": "Không thể gửi OTP",
+        "confirmError": "Lỗi xác nhận OTP",
+        "loginSuccess": "Đăng nhập thành công!"
     }
 }

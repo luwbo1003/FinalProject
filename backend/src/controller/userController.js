@@ -1,6 +1,7 @@
 const { getDatabase } = require("firebase-admin/database");
+const { v4: uuidv4 } = require("uuid");
 
-const getAllUsers = async (req, res, firebaseApp) => {
+const getAllUsers = async (req, res) => {
   const db = getDatabase();
   try {
     const snapshot = await db.ref("User").once("value");
@@ -13,7 +14,8 @@ const getAllUsers = async (req, res, firebaseApp) => {
   }
 };
 
-const getUserById = async (req, res, firebaseApp) => {
+const getUserById = async (req, res) => {
+  const db = getDatabase();
   const userId = req.params.userId;
   try {
     const snapshot = await db.ref(`User/${userId}`).once("value");
@@ -26,7 +28,22 @@ const getUserById = async (req, res, firebaseApp) => {
   }
 };
 
+const registerUser = async (req, res) => {
+  const db = getDatabase();
+  const userId = uuidv4();
+  const newUser = req.body;
+  try {
+    const userRef = db.ref("User").child(userId);
+    await userRef.set(newUser);
+    res.status(201).json({ userId });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
+  registerUser,
 };
