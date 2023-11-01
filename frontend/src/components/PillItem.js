@@ -48,7 +48,7 @@ export default function PillItem({ hour, min, mcName }) {
         <Text>{mcName}</Text>
       </View>
       <TouchableOpacity style={styles.actionButton}>
-        <Text style={styles.actionButtonText}>Uống</Text>
+        <Text style={styles.actionButtonText}>{t("ButtonLabel.checkBtn")}</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   );
