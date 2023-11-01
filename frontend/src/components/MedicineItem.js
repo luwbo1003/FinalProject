@@ -15,7 +15,7 @@ const MedicineItem = ({ name, quantity }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: Dimensions.get("window").width - 20,
+    width: Dimensions.get("window").width - 50,
     borderWidth: 1,
     borderColor: "lightgray",
     borderRadius: 10,

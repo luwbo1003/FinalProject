@@ -30,12 +30,13 @@ const getNotificationById = async (req, res, firebaseApp) => {
   }
 };
 
-const createNotification = async (req, res, firebaseApp) => {
+const createNotification = async (req, res) => {
   const db = getDatabase();
   const { uid, MCName, dateStart, dateEnd, medicines, times, everday } =
     req.body;
   const uidRef = db.ref("MedicineCalendar").child(uid);
   let maxIndex = 0;
+  let check = false;
 
   try {
     const userRef = db.ref("MedicineCalendar");
@@ -44,6 +45,7 @@ const createNotification = async (req, res, firebaseApp) => {
         const children = snapshot.val();
         for (const key in children) {
           if (key === uid) {
+            check = true;
             const MCId_child = children[key];
             for (const k in MCId_child) {
               maxIndex += 1;
@@ -58,25 +60,27 @@ const createNotification = async (req, res, firebaseApp) => {
               Everyday: everday,
               MCName: MCName,
             };
+
             await notiRef.set(newDatePick);
             await medListRef.set(medicines);
             await medTimetRef.set(times);
-            return;
-          } else {
-            const notiRef = uidRef.child("MCId1");
-            const medListRef = notiRef.child("MedicineList");
-            const medTimetRef = notiRef.child("Time");
-            const newDatePick = {
-              DateStart: dateStart,
-              DateEnd: dateEnd,
-              Everyday: everday,
-              MCName: MCName,
-            };
-            await notiRef.set(newDatePick);
-            await medListRef.set(medicines);
-            await medTimetRef.set(times);
-            return;
+            break;
           }
+        }
+        if (!check) {
+          const notiRef = uidRef.child("MCId1");
+          const medListRef = notiRef.child("MedicineList");
+          const medTimetRef = notiRef.child("Time");
+          const newDatePick = {
+            DateStart: dateStart,
+            DateEnd: dateEnd,
+            Everyday: everday,
+            MCName: MCName,
+          };
+
+          await notiRef.set(newDatePick);
+          await medListRef.set(medicines);
+          await medTimetRef.set(times);
         }
       } else {
         const notiRef = uidRef.child("MCId1");
