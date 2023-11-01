@@ -36,7 +36,7 @@ const LoginScreen = ({ handleLoginProps }) => {
   const sendVerification = async () => {
     try {
       const response = await fetch(
-        "http://192.168.100.2:8083/api/generateOTP",
+        "http://10.86.156.111:8083/api/generateOTP",
         {
           method: "POST",
           headers: {
@@ -66,7 +66,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
   const confirmCode = async () => {
     try {
-      const response = await fetch("http://192.168.100.2:8083/api/verifyOTP", {
+      const response = await fetch("http://10.86.156.111:8083/api/verifyOTP", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const LoginScreen = ({ handleLoginProps }) => {
 
       Alert.alert(t("NotifyMessage.loginSuccess"));
       // setSession
-      await fetch("http://192.168.100.2:8083/api/setSession", {
+      await fetch("http://10.86.156.111:8083/api/setSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +111,7 @@ const LoginScreen = ({ handleLoginProps }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <Text style={styles.login_title}>
-          {t("ScreenTitle.loginScreenTitle")}
+          {t("ScreenTitle.loginScreenTitle").toUpperCase()}
         </Text>
         <View style={styles.phone_frame}>
           <TextInput
@@ -120,12 +120,12 @@ const LoginScreen = ({ handleLoginProps }) => {
             onChangeText={setPhoneNumber}
           />
           <TouchableOpacity style={styles.btn_send} onPress={sendVerification}>
-            <Text>{t("ButtonLabel.sendOtp")}</Text>
+            <Text style={{lineHeight: 24}}>{t("ButtonLabel.sendOtp")}</Text>
           </TouchableOpacity>
         </View>
         {otpFlag && (
           <>
-            <View style={{ width: "100%", marginVertical: 24 }}>
+            <View style={{ width: "100%", marginVertical: 20 }}>
               <TextInput
                 placeholder={t("InputPlaceholder.otpCode")}
                 onChangeText={setCode}
@@ -147,17 +147,17 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
+    padding: 30,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.neutro01,
   },
   login_title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     color: colors.primary01,
-    marginBottom: 70,
+    marginBottom: 60,
   },
   phone_frame: {
     flexDirection: "row",
@@ -167,6 +167,8 @@ const styles = StyleSheet.create({
   },
   phone_input: {
     width: "65%",
+    paddingHorizontal: 15,
+    paddingVertical: 20,
     padding: 20,
     fontSize: 16,
     borderRadius: 10,
@@ -176,10 +178,13 @@ const styles = StyleSheet.create({
     shadowRadius: 24,
     backgroundColor: "#f5f5f5",
     lineHeight: 24,
+    marginRight: 15,
+    outlineStyle: "none",
   },
   btn_send: {
-    width: "30%",
-    height: "100%",
+    width: '30%',
+    paddingHorizontal: 15,
+    paddingVertical: 20,
     padding: 20,
     fontSize: 16,
     borderRadius: 8,
@@ -190,6 +195,7 @@ const styles = StyleSheet.create({
     shadowRadius: 24,
     backgroundColor: colors.neutro02,
     lineHeight: 24,
+    textAlign: 'center',
   },
   otp_input: {
     padding: 20,
@@ -200,6 +206,9 @@ const styles = StyleSheet.create({
     shadowColor: "#c8c8c8",
     shadowRadius: 24,
     backgroundColor: "#f5f5f5",
+    outlineStyle: "none",
+    lineHeight: 24,
+
   },
   btn_login: {
     width: "100%",

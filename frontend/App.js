@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     const getSessionId = async () => {
-      // await AsyncStorage.clear();
+      await AsyncStorage.clear();
       const sessionID = await AsyncStorage.getItem("sessionId");
       if (sessionID) {
         setIsVerify(true);

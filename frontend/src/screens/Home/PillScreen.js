@@ -48,7 +48,7 @@ const PillScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <FlatList style={{paddingTop: 15}}
         data={pill}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderPillItem}
@@ -60,7 +60,7 @@ const PillScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 15,
     alignItems: "center",
     justifyContent: "flex-start",
   },
